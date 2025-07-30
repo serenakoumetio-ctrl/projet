@@ -1,19 +1,35 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import About from './pages/About';
-import Contact from './pages/Contact';
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import "./index.css";
+
+
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Cards from "./components/Cards";
+
+
+import Footer from "./components/Footer";
+import FAQ from "./components/FAQ";
+import Formulaire from "./components/Formulaire";
 
 function App() {
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/a-propos" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+    <div className="b">
+      <section >
+
+        <Header />
+        <Hero />
+        <FAQ />
+        <Cards />
+        <Formulaire/>
+        <Footer />
+      </section>
+
     </div>
   );
 }
