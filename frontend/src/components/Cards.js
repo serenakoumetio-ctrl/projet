@@ -3,18 +3,23 @@ import React from "react";
 const Cards = () => {
   const cards = [
     {
-      title: "Carte 1",
-      description: "Zoom au survol avec animation d'entrée.",
+      title: "Disponibilite bilingue",
+      description: "Le cameroun etant un pays bilingue , l'assurance de la disponibilite des textes  dans les deux langues officielles est un atout majeur, garantissant l'equite d'acces pour tous les citoyens.",
       delay: "0",
     },
     {
-      title: "Carte 2",
-      description: "Animations au scroll avec AOS.",
+      title: "Transparence et droit ",
+      description: "Comprenez mieux vos droits et obligations grace a un acces direct et clair aux textes qui regissent votre quotidien.",
       delay: "100",
     },
     {
-      title: "Carte 3",
-      description: "Design responsive et moderne.",
+      title: "Reduction des delais et des erreurs.",
+      description: "Accedez rapidement a l'information fiable pour voos demarches, reduisnat ainsi les attentes et les erreurs couteuses.",
+      delay: "200",
+    },
+    {
+      title: "Information ajour .",
+      description: "Le systeme de versioning garantit que les citoyens consultent toujour la version la plus recente et valide d'un texte, evitant ainsi l'utilisation de documents obselete ou abroges.",
       delay: "200",
     },
   ];
@@ -27,6 +32,8 @@ const Cards = () => {
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
     }}>
+
+      <h2 className="text-3xl text-center  text-white ">Avantages de Gov-AI</h2>
       <section className="container mx-auto px-4 py-40 grid md:grid-cols-3 gap-8">
         {cards.map((card, index) => (
           <div
