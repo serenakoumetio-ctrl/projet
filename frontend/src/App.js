@@ -12,6 +12,7 @@ import Cards from "./components/Cards";
 import Footer from "./components/Footer";
 import FAQ from "./components/FAQ";
 import Formulaire from "./components/Formulaire";
+import Navbar from "./components/Navbar";
 
 function App() {
   useEffect(() => {
@@ -22,7 +23,7 @@ function App() {
     <div className="b">
       <section >
 
-        <Header />
+        <Navbar />
         <Hero />
         <FAQ />
         <Cards />
