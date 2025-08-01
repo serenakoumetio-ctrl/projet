@@ -4,7 +4,7 @@ import "aos/dist/aos.css";
 import "./index.css";
 
 
-import Header from "./components/Header";
+import Header from "./components/Navbar";
 import Hero from "./components/Hero";
 import Cards from "./components/Cards";
 
