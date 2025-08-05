@@ -1,0 +1,44 @@
+# Ignorer node_modules
+node_modules/
+
+# Ignorer les fichiers de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ignorer les fichiers de build React
+build/
+dist/
+
+# Ignorer les fichiers .env contenant des variables sensibles
+.env
+.env.*.local
+
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
+
+# Ignorer les fichiers de test coverage
+coverage/
+
+# Ignorer les fichiers de cache
+.cache/
+.next/
+.vite/
+turbo/
+*.tsbuildinfo
+
+# Ignorer les dossiers liés à l’IDE
+.vscode/
+.idea/
+*.sw?
+
+# Ignorer les fichiers temporaires
+*.log
+*.tmp
+
+# Ignorer les fichiers de lock pour d'autres gestionnaires si tu utilises npm
+yarn.lock
+pnpm-lock.yaml
+
