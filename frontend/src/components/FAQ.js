@@ -63,16 +63,18 @@ const FAQ = () => {
         </div>
 
         {/* Illustration en bas */}
-        <div className="mt-12 text-center" data-aos="zoom-in">
+
+        <div className=" flex mt-14  " data-aos="zoom-in">
           <img
-            src="/gov-ai-illustration.png" // place ton image dans /public/
+            src="/img/gov2.jpg" // place ton image dans /public/
             alt="Illustration GOV-AI"
-            className="mx-auto w-full max-w-md rounded-lg shadow-lg"
+            className="my-3 object-fit-cover   max-w-md rounded-lg shadow-lg"
           />
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-            Une IA au service du gouvernement camerounais
-          </p>
+
         </div>
+        <p className="text-xl text-gray-500 dark:text-gray-400 mt-2">
+          Une IA au service du gouvernement camerounais
+        </p>
       </div>
     </section>
   );
