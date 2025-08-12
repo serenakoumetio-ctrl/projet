@@ -33,7 +33,7 @@ const goals = [
   },
 ];
 
-const FAQ = () => {
+const Fonctionalite = () => {
   return (
     <section className="py-16 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4">
@@ -80,4 +80,4 @@ const FAQ = () => {
   );
 };
 
-export default FAQ;
+export default Fonctionalite;

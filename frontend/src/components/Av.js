@@ -1,6 +1,6 @@
 import React from "react";
 
-const Cards = () => {
+const Av = () => {
   const cards = [
     {
       title: "Disponibilite bilingue",
@@ -54,4 +54,4 @@ const Cards = () => {
   );
 };
 
-export default Cards;
+export default Av;

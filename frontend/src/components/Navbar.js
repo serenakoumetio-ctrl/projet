@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -19,10 +20,10 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-6">
           {/* Liens */}
           <nav className="flex space-x-4">
-            <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">Accueil</a>
-            <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">À propos</a>
-             <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600">Fonctionnalités</a>
-            <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">Contact</a>
+            <Link to="/home" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">Accueil</Link>
+            <Link to="/home" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">À propos</Link>
+             <Link to="/Fonctionalite" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600">Fonctionnalités</Link>
+            <Link to="/Formulaire" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">Contact</Link>
           </nav>
 
           {/* Boutons */}
@@ -59,10 +60,10 @@ const Navbar = () => {
       {/* Menu déroulant en mobile */}
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 space-y-3">
-          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600">Accueil</a>
-          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600">À propos</a>
-          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600"> Fonctionnalités</a>
-           <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600">Contact</a>
+                     <Link to="/home" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">Accueil</Link>
+            <Link to="/home" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">À propos</Link>
+             <Link to="/Fonctionalite" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600">Fonctionnalités</Link>
+            <Link to="/Formulaire" className="text-gray-700 dark:text-gray-300 hover:text-purple-600">Contact</Link>
       
 
           {/* Boutons DarkMode et Langue en mobile */}

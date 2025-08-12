@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importer Link
+import Accueil from '../pages/Accueil';
 
-const Hero = () => {
+const Acc = () => {
   return (
     <section
       className="parallax text-center text-white py-32 relative"
@@ -21,21 +23,22 @@ const Hero = () => {
           Gov-AI : L'intelligence au service de la gouvernance
         </h2>
         <p className="text-lg md:text-xl mb-8" data-aos="fade-up" data-aos-delay="200">
-             Gov-IA est une solution d'intelligence artificielle développée par le CENANDI pour améliorer et faciliter l'accès au textes du Cameroun .
+          Gov-IA est une solution d'intelligence artificielle développée par le CENANDI pour améliorer et faciliter l'accès au textes du Cameroun .
         </p>
 
-        <button
-          className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-full transition duration-300"
+        {/* Bouton qui redirige vers /home */}
+        <Link
+          to="/home"
+          className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-full transition duration-300 inline-block"
           data-aos="fade-up"
           data-aos-delay="400"
         >
           En savoir plus
-        </button>
+        </Link>
 
-        
       </div>
     </section>
   );
 };
 
-export default Hero;
+export default Acc;
