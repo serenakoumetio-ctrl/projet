@@ -1,12 +1,13 @@
 import React from "react";
-import { ArrowUp } from "lucide-react";
+
 
 const Footer = () => {
   return (
+    //mt-8 → Marge en haut de 2rem (32px).
     <footer className="bg-white mt-8">
       {/* Section principale */}
       <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-        
+
         {/* Colonne 1 */}
         <div>
           <p className="text-gray-900 font-medium mb-4">
@@ -23,11 +24,11 @@ const Footer = () => {
         <div>
           <h3 className="font-bold text-lg mb-4 border-l-4 border-green-600 pl-2">
             Navigation</h3>
-             <a href="#Acc"className="block text-gray-500  hover:text-green-500 ">Accueil</a>
-            <a href="#Apropos" className="block text-gray-500  hover:text-purple-600">À propos</a>
-            <a href="#Fonctionalite" className="block text-gray-500 hover:text-purple-600">Fonctionnalités</a>
-            <a href="#Formulaire" className="text-gray-500 hover:text-purple-600">Contact</a>
-          
+          <a href="#Acc" className="block text-gray-500  hover:text-green-500 ">Accueil</a>
+          <a href="#Apropos" className="block text-gray-500  hover:text-purple-600">À propos</a>
+          <a href="#Fonctionalite" className="block text-gray-500 hover:text-purple-600">Fonctionnalités</a>
+          <a href="#Formulaire" className="text-gray-500 hover:text-purple-600">Contact</a>
+
           {/* Tu peux ajouter ici une liste de liens */}
         </div>
 
@@ -48,17 +49,15 @@ const Footer = () => {
           © 2020 CENADI. Tous droits réservés
         </p>
 
-        {/* Bouton retour haut */}
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="absolute right-6 top-1/2 -translate-y-1/2 bg-white text-black p-2 rounded-full shadow hover:bg-gray-100 transition"
-        >
-          <ArrowUp size={20} />
-        </button>
+        
       </div>
     </footer>
   );
 };
 
 export default Footer;
+//border-l-4 border-green-600 → Bordure gauche verte de 4px.
 
+//pl-2  Padding à gauche (0.5rem) pour ne pas coller au texte.
+
+//block Chaque lien occupe toute la largeur de sa ligne.

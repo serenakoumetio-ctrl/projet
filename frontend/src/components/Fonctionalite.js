@@ -71,28 +71,39 @@ const Fonctionalite = () => {
           {goals.map((goal, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 transition-transform transform hover:-translate-y-1 hover:shadow-2xl"
+              className="bg-white  shadow-lg rounded-lg p-6 transition-transform transform hover:-translate-y-1 hover:shadow-2xl mb-10"
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
-              <h3 className="text-2xl font-semibold dark:text-white mb-3">
+              <h3 className="text-2xl font-semibold  mb-3">
                 {goal.title}
               </h3>
-              <p className=" dark:text-gray-300 text-lg">
+              <p className="  text-lg">
                 {goal.description}
               </p>
             </div>
           ))}
-        </div>
 
+        </div>
+        <div className="mx-auto flex justify-center mt-10 ">
+          <a
+            href="#Avantages"
+            className="bg-gradient-to-r from-green-500 to-yellow-400  shadow-lg  text-white font-semibold py-3 px-6 rounded-full  hover:bg-black hover:from-transparent  transition duration-300 "
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            Découvrez les Avantages de Gov-AI
+          </a>
+        </div>
 
 
 
       </div>
       <div >
 
-        <h2 className="text-4xl text-center font-medium mt-14 ">Avantages de Gov-AI</h2>
-        <section className="container mx-auto px-4 py-40 grid md:grid-cols-3 gap-8 ">
+
+        <section id="Avantages" className="container mx-auto px-4 py-40 grid md:grid-cols-3 gap-8 ">
+          <h2 className="text-4xl text-center font-medium mt-20 ">Avantages de Gov-AI</h2>
           {cards.map((card, index) => (
             <div
               key={index}
@@ -109,67 +120,67 @@ const Fonctionalite = () => {
           ))}
         </section>
         <section id="centralisation" className="px-6 py-16 bg-green-50">
-  <div className="max-w-5xl mx-auto">
-    <h2
-      className="text-3xl md:text-4xl font-bold  mb-6"
-      data-aos="fade-up"
-    >
-      Centraliser et structurer le corpus gouvernemental
-    </h2>
+          <div className="max-w-5xl mx-auto">
+            <h2
+              className="text-3xl md:text-4xl font-bold  mb-6"
+              data-aos="fade-up"
+            >
+              Centraliser et structurer le corpus gouvernemental
+            </h2>
 
-    <p className="text-gray-500 mb-6" data-aos="fade-up" data-aos-delay="100">
-      Cela veut dire deux choses principales :
-    </p>
+            <p className="text-gray-500 mb-6" data-aos="fade-up" data-aos-delay="100">
+              Cela veut dire deux choses principales :
+            </p>
 
-    {/* 1) Centraliser */}
-    <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-green-100"
-         data-aos="fade-up" data-aos-delay="150">
-      <h3 className="text-xl font-semibold mb-3">1. Centraliser</h3>
-      <p className=" mb-4">
-        Actuellement, les documents officiels (lois, décrets, arrêtés, circulaires, notes de service…)
-        peuvent être <span className="font-medium">dispersés</span> :
-      </p>
-      <ul className="space-y-2 ">
-        <li className="flex items-start gap-2">
-          <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
-          Dans différents ministères
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
-          Dans des archives papier
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
-          Sur des sites web séparés
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
-          Ou même dans des ordinateurs internes non connectés entre eux
-        </li>
-      </ul>
+            {/* 1) Centraliser */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-green-100"
+              data-aos="fade-up" data-aos-delay="150">
+              <h3 className="text-xl font-semibold mb-3">1. Centraliser</h3>
+              <p className=" mb-4">
+                Actuellement, les documents officiels (lois, décrets, arrêtés, circulaires, notes de service…)
+                peuvent être <span className="font-medium">dispersés</span> :
+              </p>
+              <ul className="space-y-2 ">
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
+                  Dans différents ministères
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
+                  Dans des archives papier
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
+                  Sur des sites web séparés
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
+                  Ou même dans des ordinateurs internes non connectés entre eux
+                </li>
+              </ul>
 
-      <p className=" mt-4">
-        <span className="font-semibold">Centraliser</span> consiste à rassembler toutes ces données
-        dans un seul point d’accès sécurisé.
-      </p>
-      <p className=" mt-2">
-        Avec <span className="font-semibold">Gov-AI</span>, cette “centralisation” veut dire que tous
-        les textes officiels se retrouvent dans une seule base de données, consultable par les
-        administrations autorisées.
-      </p>
-    </div>
+              <p className=" mt-4">
+                <span className="font-semibold">Centraliser</span> consiste à rassembler toutes ces données
+                dans un seul point d’accès sécurisé.
+              </p>
+              <p className=" mt-2">
+                Avec <span className="font-semibold">Gov-AI</span>, cette “centralisation” veut dire que tous
+                les textes officiels se retrouvent dans une seule base de données, consultable par les
+                administrations autorisées.
+              </p>
+            </div>
 
-    {/* 2) Structurer (accroche courte pour la suite si tu veux l'ajouter) */}
-    <div className="bg-white rounded-2xl shadow-lg p-6 border border-green-100"
-         data-aos="fade-up" data-aos-delay="200">
-      <h3 className="text-xl font-semibold mb-3">2. Structurer</h3>
-      <p className="">
-        Organiser les textes par catégories, thèmes, dates, ministères et métadonnées pour
-        permettre une recherche rapide et une consultation claire (bloc détaillé à ajouter si besoin).
-      </p>
-    </div>
-  </div>
-</section>
+            {/* 2) Structurer (accroche courte pour la suite si tu veux l'ajouter) */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border border-green-100"
+              data-aos="fade-up" data-aos-delay="200">
+              <h3 className="text-xl font-semibold mb-3">2. Structurer</h3>
+              <p className="">
+                Organiser les textes par catégories, thèmes, dates, ministères et métadonnées pour
+                permettre une recherche rapide et une consultation claire (bloc détaillé à ajouter si besoin).
+              </p>
+            </div>
+          </div>
+        </section>
 
       </div>
     </section>

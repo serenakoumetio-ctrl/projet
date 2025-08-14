@@ -10,7 +10,7 @@ const Apropos = () => {
   return (
     <section id="Apropos">
       {/* Section texte */}
-      <section className="parallax text-center mt-10 px-4 ">
+      <section className=" text-center mt-10 px-4 ">
         <h4 className="text-xl md:text-2xl font-bold mb-6" data-aos="zoom-in">
         Une solution dédiée aux administrations publiques
         </h4>
@@ -29,16 +29,16 @@ const Apropos = () => {
       {/* Section cartes */}
       <section className="px-6 py-3 ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {cardImages.map((src, index) => (
+          {cardImages.map((src, index) => ( // .map() est une fonction qui parcourt chaque élément du tableau src est le chemin de l’image, index est sa position dans le tableau
             <div
-              key={index}
-              className="bg-green-100 rounded-lg overflow-hidden transform transition duration-300 hover:scale-105"
+              key={index} //clé unique pour chaque élément du tableau
+              className="bg-green-100 rounded-lg overflow-hidden "
               data-aos="fade-up"
-              data-aos-delay={index * 100}
+              data-aos-delay={index * 100} //Décalage de l’animation selon l’ordre de l’image
             >
               <img
-                src={src}
-                alt={`Gov-AI ${index + 1}`}
+                src={src} //Affiche l’image correspondante au chemin actuel.
+                alt={`image reel de Gov-AI ${index + 1}`}
                 className=" h-17 object-cover"
               />
             </div>

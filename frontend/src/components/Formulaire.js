@@ -3,7 +3,7 @@ import React from "react";
 const Formulaire = () => {
   return (
     <section id="Formulaire">
-      <div className="max-w-xl mx-auto mt-10 p-6 bg-green-50 dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-2xl">
+      <div className="max-w-xl mx-auto mt-10 p-6 bg-green-50  rounded-lg shadow-lg hover:shadow-2xl">
         <h2 className="text-2xl font-bold mb-6 text-center" data-aos="fade-up">
           Contactez-nous
         </h2>
