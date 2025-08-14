@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'; // Importer Link
 const Acc = () => { //Déclare un composant fonctionnel React.
   return (
     <section
-      className="parallax text-center text-white py-32 relative" //Une classe personnalisée pour l'effet paralax,  relative: Position relative (utile pour placer des éléments en absolute à l'interieur)
+      className="parallax text-center text-white py-40 relative" //Une classe personnalisée pour l'effet paralax,  relative: Position relative (utile pour placer des éléments en absolute à l'interieur)
       style={{
         backgroundImage: "url('/img/4.png')", // Change cette image selon tes besoins
         backgroundAttachment: "fixed", // ici l'image reste fixe pendant le scroll
@@ -29,14 +29,14 @@ const Acc = () => { //Déclare un composant fonctionnel React.
         </p>
 
         {/* Bouton qui redirige vers /home */}
-        <Link
-          to="/home"
+        <a
+          href="#Fonctionalite"
           className="bg-green-500 shadow-lg hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-full transition duration-300 inline-block"
           data-aos="fade-up"
           data-aos-delay="400"
         >
           En savoir plus
-        </Link>
+        </a>
 
       </div>
     </section>

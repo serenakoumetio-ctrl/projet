@@ -22,8 +22,12 @@ const Footer = () => {
         {/* Colonne 2 */}
         <div>
           <h3 className="font-bold text-lg mb-4 border-l-4 border-green-600 pl-2">
-            Liens utiles
-          </h3>
+            Navigation</h3>
+             <a href="#Acc"className="block text-gray-500  hover:text-green-500 ">Accueil</a>
+            <a href="#Apropos" className="block text-gray-500  hover:text-purple-600">À propos</a>
+            <a href="#Fonctionalite" className="block text-gray-500 hover:text-purple-600">Fonctionnalités</a>
+            <a href="#Formulaire" className="text-gray-500 hover:text-purple-600">Contact</a>
+          
           {/* Tu peux ajouter ici une liste de liens */}
         </div>
 

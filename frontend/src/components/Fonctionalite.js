@@ -58,7 +58,7 @@ const cards = [
 
 const Fonctionalite = () => {
   return ( // bg-gradient-to-r from-green-500 to-yellow-400
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white" id="Fonctionalite">
       <div className="container mx-auto px-4">
         <h2
           className="text-4xl font-bold text-center mb-10"

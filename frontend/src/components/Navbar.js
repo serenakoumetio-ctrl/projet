@@ -9,8 +9,8 @@ const Navbar = () => {
 
   return (
     // className="fixed  w-full bg-green-500 dark:bg-gray-900 shadow-md p-3 z-50"> pour que la navbar reste fixe
-    <header className="bg-green-500 shadow-md p-3   ">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <header className="bg-green-500 shadow-md fixed w-full z-50  ">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center ">
         {/* Logo */}
       
           <img src="/img/ll.png" alt="Logo du site" className="w-40 h-auto object-contain" />
@@ -20,10 +20,10 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-6">
           {/* Liens */}
           <nav className="flex space-x-4 text-lg">
-            <Link to="/home" className="text-white  hover:text-purple-600 ">Accueil</Link>
-            <Link to="/home" className="text-white  hover:text-purple-600">À propos</Link>
-            <Link to="/Fonctionalite" className="block text-white hover:text-purple-600">Fonctionnalités</Link>
-            <Link to="/Formulaire" className="text-white hover:text-purple-600">Contact</Link>
+            <a href="#Acc"className="text-white  hover:text-purple-600 ">Accueil</a>
+            <a href="#Apropos" className="text-white  hover:text-purple-600">À propos</a>
+            <a href="#Fonctionalite" className="block text-white hover:text-purple-600">Fonctionnalités</a>
+            <a href="#Formulaire" className="text-white hover:text-purple-600">Contact</a>
           </nav>
 
           {/* Boutons */}
@@ -55,10 +55,10 @@ const Navbar = () => {
       {/* Menu déroulant en mobile */}
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 space-y-3">
-          <Link to="/home" className="block text-white  hover:text-purple-600">Accueil</Link>
-          <Link to="/home" className="block text-white  hover:text-purple-600">À propos</Link>
-          <Link to="/Fonctionalite" className="block text-white hover:text-purple-600">Fonctionnalités</Link>
-          <Link to="/Formulaire" className="block text-white hover:text-purple-600">Contact</Link>
+          <a href="#Acc"className="block text-white  hover:text-purple-600 ">Accueil</a>
+            <a href="#Apropos" className="block text-white  hover:text-purple-600">À propos</a>
+            <a href="#Fonctionalite" className="block text-white hover:text-purple-600">Fonctionnalités</a>
+            <a href="#Formulaire" className="block text-white hover:text-purple-600">Contact</a>
 
           {/* Boutons DarkMode et Langue en mobile */}
           <div className="flex space-x-4 pt-2">

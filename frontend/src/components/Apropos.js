@@ -8,7 +8,7 @@ const cardImages = [
 
 const Apropos = () => {
   return (
-    <div>
+    <section id="Apropos">
       {/* Section texte */}
       <section className="parallax text-center mt-10 px-4 ">
         <h4 className="text-xl md:text-2xl font-bold mb-6" data-aos="zoom-in">
@@ -45,7 +45,7 @@ const Apropos = () => {
           ))}
         </div>
       </section>
-    </div>
+    </section>
   );
 };
 
