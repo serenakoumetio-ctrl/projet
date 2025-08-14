@@ -5,16 +5,18 @@ import Fonctionalite from "../components/Fonctionalite";
 import Av from "../components/Av"
 import Formulaire from "../components/Formulaire";
 import Footer from "../components/Footer";
+import Apropos from "../components/Apropos";
 
 
 function Accueil() {
   return (
-    <div>
+    <div className=" ">
 
       <Navbar/>     
       <Acc/>
+      <Apropos/>
       <Fonctionalite/>
-      <Av/>
+      
       <Formulaire/>
       <Footer/>
 
