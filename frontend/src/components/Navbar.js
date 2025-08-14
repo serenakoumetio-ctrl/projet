@@ -20,10 +20,11 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-6">
           {/* Liens */}
           <nav className="flex space-x-4 text-lg">
-            <a href="#Acc"className="text-white  hover:text-purple-600 ">Accueil</a>
-            <a href="#Apropos" className="text-white  hover:text-purple-600">À propos</a>
-            <a href="#Fonctionalite" className="block text-white hover:text-purple-600">Fonctionnalités</a>
-            <a href="#Formulaire" className="text-white hover:text-purple-600">Contact</a>
+           <a href="#Acc" className="text-white border-b-2 border-transparent hover:border-white transition duration-300">  Accueil</a>
+           <a href="#Apropos" className="text-white border-b-2 border-transparent hover:border-white transition duration-300">  À propos</a>
+           <a href="#Fonctionalite" className="text-white border-b-2 border-transparent hover:border-white transition duration-300">Fonctionnalités</a>
+           <a href="#Formulaire" className="text-white border-b-2 border-transparent hover:border-white transition duration-300"> Contact</a>
+
           </nav>
 
           {/* Boutons */}

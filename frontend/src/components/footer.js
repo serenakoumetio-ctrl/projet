@@ -44,7 +44,7 @@ const Footer = () => {
       </div>
 
       {/* Bas de page */}
-      <div className="bg-green-600 py-8 relative">
+      <div className="bg-green-500 py-8 relative">
         <p className="text-center text-white text-sm">
           © 2020 CENADI. Tous droits réservés
         </p>
