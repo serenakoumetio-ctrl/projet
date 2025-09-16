@@ -1,9 +1,11 @@
 require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors'); // <-- import cors
 
 // Import des fonctions pour MongoDB
-const { connectDb } = require('./src/service/mongoose');
+const { connectDb } = require('./src/service/mongoose'); 
+
 
 // Import des routes
 const configurationRoutes = require('./src/routes/configuration');
