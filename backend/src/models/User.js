@@ -17,18 +17,6 @@ const userSchema = mongoose.Schema(    // creation du Schema.. c ad un model pou
             type: String,
             required: true,
         },
-        email: {
-            type: String,
-            required: true, // pour rendre le champ obligatoir
-            unique: true, // pour rendre l'email unique
-            lowercase: true, // pour mettre l'email en miniscule
-            trim: true, // pour enlever les espaces vides
-            validate(v) {
-                if (!validator.isEmail(v)) throw new Error('E-mail non valide');
-
-            }
-
-        },
 
         password: {
             type: String,
@@ -44,8 +32,8 @@ userSchema.pre('save', async function () {
 });
 
 // methode statique pour la connecxion
-userSchema.statics.findUser = async function (email, password) {
-    const user = await this.findOne({ email }); //recuperation de l'email
+userSchema.statics.findUser = async function (matricule, password) {
+    const user = await this.findOne({ matricule}); //recuperation de l'email
     if (!user) throw new Error('Erreur, pas possible de se connecter!'); // si l'email n'exite pas on renvoi ce message
 
     const isPasswordValid = await bcrypt.compare(password, user.password); // is ... c'est pour renvoyer un booleen
@@ -57,7 +45,7 @@ userSchema.statics.findUser = async function (email, password) {
 
 
 const User = mongoose.model('User', userSchema); // creation du middleware
-
+//module.exports = mongoose.model("User", userSchema);
 
 module.exports = User;
 
