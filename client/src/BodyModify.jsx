@@ -1,299 +1,235 @@
-import React, { useState } from "react";
-import { FiArrowLeft, FiEdit, FiTrash2 } from "react-icons/fi";
+
+
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FiArrowLeft } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { FiBell, FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
 
 const BodyModify = () => {
   const navigate = useNavigate();
+  const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // --- Présentation ---
-  const [title, setTitle] = useState("Notre Présentation");
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  // === Edition des cards existantes ===
+  const [editingCardId, setEditingCardId] = useState(null);
+  const [editForm, setEditForm] = useState({ title: "", description: "", type: "fonctionnalité", images: [] });
 
-  const [subtitle, setSubtitle] = useState("Découvrez qui nous sommes");
-  const [isEditingSubtitle, setIsEditingSubtitle] = useState(false);
+  // === Création nouvelle card ===
+  const [showNewCardForm, setShowNewCardForm] = useState(false);
+  const [newCardForm, setNewCardForm] = useState({ title: "", description: "", type: "fonctionnalité", images: [] });
 
-  // --- Images ---
-  const [images, setImages] = useState([
-    "https://via.placeholder.com/300x200?text=Image+1",
-    "https://via.placeholder.com/300x200?text=Image+2",
-    "https://via.placeholder.com/300x200?text=Image+3",
-  ]);
+  const API_URL = "http://localhost:5000/api/cards";
 
-  // --- Fonctionnalités (6 champs) ---
-  const [features, setFeatures] = useState([
-    { title: "Fonctionnalité 1", subtitle: "Description 1" },
-    { title: "Fonctionnalité 2", subtitle: "Description 2" },
-    { title: "Fonctionnalité 3", subtitle: "Description 3" },
-    { title: "Fonctionnalité 4", subtitle: "Description 4" },
-    { title: "Fonctionnalité 5", subtitle: "Description 5" },
-    { title: "Fonctionnalité 6", subtitle: "Description 6" },
-  ]);
-
-  // --- Avantages (6 champs) ---
-  const [advantages, setAdvantages] = useState([
-    { title: "Avantage 1", subtitle: "Détail 1" },
-    { title: "Avantage 2", subtitle: "Détail 2" },
-    { title: "Avantage 3", subtitle: "Détail 3" },
-    { title: "Avantage 4", subtitle: "Détail 4" },
-    { title: "Avantage 5", subtitle: "Détail 5" },
-    { title: "Avantage 6", subtitle: "Détail 6" },
-  ]);
-
-  // --- Fonctions helpers ---
-  const handleDeleteImage = (index) => {
-    const newImages = [...images];
-    newImages[index] = "";
-    setImages(newImages);
+  // ======================
+  // Récupération des cards
+  // ======================
+  const fetchCards = async () => {
+    try {
+      const res = await axios.get(API_URL);
+      setCards(res.data);
+    } catch (err) {
+      console.error("Erreur GET cards :", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleUpdateImage = (index, value) => {
-    const newImages = [...images];
+  useEffect(() => {
+    fetchCards();
+  }, []);
+
+  // ======================
+  // Edition card existante
+  // ======================
+  const startEditing = (card) => {
+    setEditingCardId(card._id);
+    setEditForm({
+      title: card.title || "",
+      description: card.description || "",
+      type: card.type || "fonctionnalité",
+      images: card.images || [],
+    });
+  };
+
+  const handleEditChange = (field, value) => {
+    setEditForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleEditImageChange = (index, value) => {
+    const newImages = [...editForm.images];
     newImages[index] = value;
-    setImages(newImages);
+    setEditForm({ ...editForm, images: newImages });
   };
 
-  const handleFeatureUpdate = (index, field, value) => {
-    const newFeatures = [...features];
-    newFeatures[index][field] = value;
-    setFeatures(newFeatures);
+  const addEditImageField = () => setEditForm({ ...editForm, images: [...editForm.images, ""] });
+  const removeEditImageField = (index) => {
+    const newImages = [...editForm.images];
+    newImages.splice(index, 1);
+    setEditForm({ ...editForm, images: newImages });
   };
 
-  const handleAdvantageUpdate = (index, field, value) => {
-    const newAdvantages = [...advantages];
-    newAdvantages[index][field] = value;
-    setAdvantages(newAdvantages);
+  const handleSaveEdit = async () => {
+    try {
+      const res = await axios.put(`${API_URL}/bulk/update`, { cards: [{ _id: editingCardId, ...editForm }] });
+      const updatedCard = res.data.updatedCards[0];
+      setCards((prev) => prev.map((c) => (c._id === updatedCard._id ? updatedCard : c)));
+      setEditingCardId(null);
+    } catch (err) {
+      console.error("Erreur save card :", err);
+    }
   };
-  const handleSave = () => {
-  alert("Les modifications ont bien été enregistrées !");
-};
 
+  // ======================
+  // Supprimer card
+  // ======================
+  const handleDeleteCard = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      setCards((prev) => prev.filter((c) => c._id !== id));
+    } catch (err) {
+      console.error("Erreur delete card :", err);
+    }
+  };
+
+  // ======================
+  // Création nouvelle card
+  // ======================
+  const handleNewChange = (field, value) => setNewCardForm({ ...newCardForm, [field]: value });
+  const handleNewImageChange = (index, value) => {
+    const newImages = [...newCardForm.images];
+    newImages[index] = value;
+    setNewCardForm({ ...newCardForm, images: newImages });
+  };
+  const addNewImageField = () => setNewCardForm({ ...newCardForm, images: [...newCardForm.images, ""] });
+  const removeNewImageField = (index) => {
+    const newImages = [...newCardForm.images];
+    newImages.splice(index, 1);
+    setNewCardForm({ ...newCardForm, images: newImages });
+  };
+
+  const handleSaveNewCard = async () => {
+    try {
+      const res = await axios.post(API_URL, newCardForm);
+      setCards([...cards, res.data]);
+      setShowNewCardForm(false);
+      setNewCardForm({ title: "", description: "", type: "fonctionnalité", images: [] });
+    } catch (err) {
+      console.error("Erreur création card :", err);
+    }
+  };
+
+  if (loading) return <p>Chargement...</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-400 to-gray-200">
-      {/* Navbar identique */}
-      <nav className="bg-gradient-to-r from-green-500 to-yellow-500 text-white p-4 shadow-md fixed w-full z-50">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => navigate("/modify-design")}
-              className="flex items-center text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded-lg transition-colors"
-            >
-              <FiArrowLeft className="mr-1" /> Retour
-            </button>
-            <img
-              src="/images/armoiries_logo_cenadi.png"
-              alt="Logo Dashboard"
-              className="h-10"
+    <div className="min-h-screen bg-gray-100 p-6">
+      <button onClick={() => navigate(-1)} className="mb-4 bg-blue-600 text-white px-4 py-2 rounded">⬅ Retour</button>
+      <h1 className="text-2xl font-bold mb-6">Modifier les Cards</h1>
+
+      {/* === Cards existantes === */}
+      {cards.map((card) => (
+        <div key={card._id} className="bg-white p-4 mb-4 rounded shadow">
+          {editingCardId === card._id ? (
+            <>
+              <input
+                type="text"
+                value={editForm.title}
+                onChange={(e) => handleEditChange("title", e.target.value)}
+                placeholder="Titre"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                value={editForm.description}
+                onChange={(e) => handleEditChange("description", e.target.value)}
+                placeholder="Description"
+                className="border p-2 w-full mb-2"
+              />
+              <select
+                value={editForm.type}
+                onChange={(e) => handleEditChange("type", e.target.value)}
+                className="border p-2 w-full mb-2"
+              >
+                <option value="fonctionnalité">Fonctionnalité</option>
+                <option value="avantage">Avantage</option>
+                <option value="presentation">Présentation</option>
+              </select>
+
+              <h4 className="font-semibold">Images</h4>
+              {editForm.images.map((img, idx) => (
+                <div key={idx} className="flex items-center mb-2">
+                  <input type="text" value={img} onChange={(e) => handleEditImageChange(idx, e.target.value)} className="border p-2 flex-1" />
+                  <button onClick={() => removeEditImageField(idx)} className="ml-2 text-red-600">🗑️</button>
+                </div>
+              ))}
+              <button onClick={addEditImageField} className="mb-2 text-green-600">➕ Ajouter image</button>
+
+              <div className="flex space-x-2">
+                <button onClick={handleSaveEdit} className="bg-green-600 text-white px-4 py-2 rounded">✅ Enregistrer</button>
+                <button onClick={() => setEditingCardId(null)} className="bg-gray-400 text-white px-4 py-2 rounded">❌ Annuler</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h3 className="font-bold">{card.title}</h3>
+              <p>{card.description}</p>
+              <p className="italic text-sm">Type: {card.type}</p>
+              <div className="flex mt-2 space-x-2">
+                <button onClick={() => startEditing(card)} className="text-blue-600">✏️ Modifier</button>
+                <button onClick={() => handleDeleteCard(card._id)} className="text-red-600">🗑️ Supprimer</button>
+              </div>
+            </>
+          )}
+        </div>
+      ))}
+
+      {/* === Formulaire nouvelle card === */}
+      <div className="mt-6">
+        <h2 className="text-xl font-bold mb-2">Ajouter une nouvelle Card</h2>
+        {!showNewCardForm && (
+          <button onClick={() => setShowNewCardForm(true)} className="bg-blue-600 text-white px-4 py-2 rounded">➕ Ajouter Card</button>
+        )}
+        {showNewCardForm && (
+          <div className="bg-white p-4 rounded shadow mb-4">
+            <input
+              type="text"
+              value={newCardForm.title}
+              onChange={(e) => handleNewChange("title", e.target.value)}
+              placeholder="Titre"
+              className="border p-2 w-full mb-2"
             />
-            <span className="text-xl font-bold">GOV-AI</span>
-          </div>
+            <input
+              type="text"
+              value={newCardForm.description}
+              onChange={(e) => handleNewChange("description", e.target.value)}
+              placeholder="Description"
+              className="border p-2 w-full mb-2"
+            />
+            <select
+              value={newCardForm.type}
+              onChange={(e) => handleNewChange("type", e.target.value)}
+              className="border p-2 w-full mb-2"
+            >
+              <option value="fonctionnalité">Fonctionnalité</option>
+              <option value="avantage">Avantage</option>
+              <option value="presentation">Présentation</option>
+            </select>
 
-           <div className="flex items-center space-x-4">
-                      <FiBell className="text-xl cursor-pointer" />
-                      <FiUser className="text-xl cursor-pointer" />
-                      <FiSettings className="text-xl cursor-pointer" />
-                      <FiLogOut className="text-xl cursor-pointer" />
-             </div>
-        </div>
-      </nav>
-
-      {/* Contenu principal */}
-      <div className="container mx-auto pt-24 px-4">
-        <div className="max-w-6xl mx-auto bg-[#FFF9C4] rounded-xl shadow-lg overflow-hidden">
-          <div className="p-8 space-y-10">
-            <h1 className="text-3xl font-bold text-green-700">
-              Modifier le Body du site vitrine
-            </h1>
-
-            {/* --- Section Présentation --- */}
-            <div className="p-6 bg-gray-50 rounded-lg space-y-6">
-              <h2 className="text-2xl font-semibold text-gray-800">
-                Présentation
-              </h2>
-              {/* Titre */}
-              <div className="flex items-center space-x-4">
-                {isEditingTitle ? (
-                  <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-2 border rounded-lg"
-                  />
-                ) : (
-                  <p className="flex-1 text-gray-700">{title}</p>
-                )}
-                <button
-                  onClick={() => setIsEditingTitle(!isEditingTitle)}
-                  className="p-2 text-blue-600 hover:text-blue-800"
-                >
-                  <FiEdit />
-                </button>
-                <button
-                  onClick={() => setTitle("")}
-                  className="p-2 text-red-600 hover:text-red-800"
-                >
-                  <FiTrash2 />
-                </button>
+            <h4 className="font-semibold">Images</h4>
+            {newCardForm.images.map((img, idx) => (
+              <div key={idx} className="flex items-center mb-2">
+                <input type="text" value={img} onChange={(e) => handleNewImageChange(idx, e.target.value)} className="border p-2 flex-1" />
+                <button onClick={() => removeNewImageField(idx)} className="ml-2 text-red-600">🗑️</button>
               </div>
-              {/* Sous-titre */}
-              <div className="flex items-center space-x-4">
-                {isEditingSubtitle ? (
-                  <input
-                    type="text"
-                    value={subtitle}
-                    onChange={(e) => setSubtitle(e.target.value)}
-                    className="w-full p-2 border rounded-lg"
-                  />
-                ) : (
-                  <p className="flex-1 text-gray-700">{subtitle}</p>
-                )}
-                <button
-                  onClick={() => setIsEditingSubtitle(!isEditingSubtitle)}
-                  className="p-2 text-blue-600 hover:text-blue-800"
-                >
-                  <FiEdit />
-                </button>
-                <button
-                  onClick={() => setSubtitle("")}
-                  className="p-2 text-red-600 hover:text-red-800"
-                >
-                  <FiTrash2 />
-                </button>
-              </div>
-            </div>
+            ))}
+            <button onClick={addNewImageField} className="mb-2 text-green-600">➕ Ajouter image</button>
 
-            {/* --- Section Images --- */}
-            <div className="p-6 bg-gray-50 rounded-lg space-y-6">
-              <h2 className="text-2xl font-semibold text-gray-800">Images</h2>
-              {images.map((img, index) => (
-                <div
-                  key={index}
-                  className="flex items-center space-x-4 border-b pb-4"
-                >
-                  <div className="w-32 h-20 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-                    {img && <img src={img} alt={`img-${index}`} className="object-cover w-full h-full" />}
-                  </div>
-                  <input
-                    type="text"
-                    value={img}
-                    onChange={(e) => handleUpdateImage(index, e.target.value)}
-                    className="flex-1 p-2 border rounded-lg"
-                  />
-                  <button
-                    onClick={() => handleDeleteImage(index)}
-                    className="p-2 text-red-600 hover:text-red-800"
-                  >
-                    <FiTrash2 />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {/* --- Section Fonctionnalités --- */}
-            <div className="p-6 bg-gray-50 rounded-lg space-y-6">
-              <h2 className="text-2xl font-semibold text-gray-800">
-                Fonctionnalités
-              </h2>
-              {features.map((f, index) => (
-                <div key={index} className="space-y-2 border-b pb-4">
-                  <div className="flex items-center space-x-4">
-                    <input
-                      type="text"
-                      value={f.title}
-                      onChange={(e) =>
-                        handleFeatureUpdate(index, "title", e.target.value)
-                      }
-                      className="flex-1 p-2 border rounded-lg"
-                    />
-                    <button
-                      onClick={() =>
-                        handleFeatureUpdate(index, "title", "")
-                      }
-                      className="p-2 text-red-600 hover:text-red-800"
-                    >
-                      <FiTrash2 />
-                    </button>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <input
-                      type="text"
-                      value={f.subtitle}
-                      onChange={(e) =>
-                        handleFeatureUpdate(index, "subtitle", e.target.value)
-                      }
-                      className="flex-1 p-2 border rounded-lg"
-                    />
-                    <button
-                      onClick={() =>
-                        handleFeatureUpdate(index, "subtitle", "")
-                      }
-                      className="p-2 text-red-600 hover:text-red-800"
-                    >
-                      <FiTrash2 />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* --- Section Avantages --- */}
-            <div className="p-6 bg-gray-50 rounded-lg space-y-6">
-              <h2 className="text-2xl font-semibold text-gray-800">
-                Avantages
-              </h2>
-              {advantages.map((a, index) => (
-                <div key={index} className="space-y-2 border-b pb-4">
-                  <div className="flex items-center space-x-4">
-                    <input
-                      type="text"
-                      value={a.title}
-                      onChange={(e) =>
-                        handleAdvantageUpdate(index, "title", e.target.value)
-                      }
-                      className="flex-1 p-2 border rounded-lg"
-                    />
-                    <button
-                      onClick={() =>
-                        handleAdvantageUpdate(index, "title", "")
-                      }
-                      className="p-2 text-red-600 hover:text-red-800"
-                    >
-                      <FiTrash2 />
-                    </button>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <input
-                      type="text"
-                      value={a.subtitle}
-                      onChange={(e) =>
-                        handleAdvantageUpdate(index, "subtitle", e.target.value)
-                      }
-                      className="flex-1 p-2 border rounded-lg"
-                    />
-                    <button
-                      onClick={() =>
-                        handleAdvantageUpdate(index, "subtitle", "")
-                      }
-                      className="p-2 text-red-600 hover:text-red-800"
-                    >
-                      <FiTrash2 />
-                    </button>
-                  </div>
-                </div>
-              ))}
+            <div className="flex space-x-2">
+              <button onClick={handleSaveNewCard} className="bg-green-600 text-white px-4 py-2 rounded">✅ Enregistrer</button>
+              <button onClick={() => setShowNewCardForm(false)} className="bg-gray-400 text-white px-4 py-2 rounded">❌ Annuler</button>
             </div>
           </div>
-        </div>
-      </div>
-      {/* Bouton Enregistrer les modifications */}
-      <div className="max-w-6xl mx-auto mt-8 px-4">
-        <button
-          onClick={handleSave}
-          className="w-full bg-gradient-to-r from-green-500 to-yellow-500 text-white font-bold py-3 px-8 rounded-xl shadow-lg hover:from-green-600 hover:to-yellow-600 transition-colors"
-        >
-          ✅ Enregistrer les modifications
-        </button>
+        )}
       </div>
     </div>
   );

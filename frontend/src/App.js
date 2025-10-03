@@ -11,8 +11,9 @@ import Accueil from "./pages/Accueil";
 
 
 function App() {
-  useEffect(() => {
-    AOS.init({ duration: 1000 });
+  useEffect(() => { //useEffect est un "hook" React Il s'exécute APRÈS que le composant soit affiché à l'écran
+
+    AOS.init({ duration: 1000 }); //initialise la bibliothèque d'animations { duration: 1000 } signifie que chaque animation durera 1 seconde
   });
 
   return (

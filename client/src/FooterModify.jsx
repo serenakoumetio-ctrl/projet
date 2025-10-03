@@ -1,127 +1,250 @@
-import React, { useState } from 'react';
-import { FiArrowLeft, FiTrash2, FiEdit2 } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const FooterModify = () => {
-  const navigate = useNavigate();
-  const [text1, setText1] = useState("Texte du footer par défaut");
-  const [imageUrl, setImageUrl] = useState("");
-  const [text2, setText2] = useState("Copyright © 2025 GOV-AI");
+  const [config, setConfig] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/configuration");
+        setConfig(res.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchConfig();
+  }, []);
+
+  const handleChange = (section, key, value) => {
+    setConfig(prev => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [key]: value
+      }
+    }));
+  };
+
+  const handleNestedChange = (section, subSection, key, value) => {
+    setConfig(prev => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [subSection]: {
+          ...prev[section][subSection],
+          [key]: value
+        }
+      }
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.put("http://localhost:5000/api/configuration", config);
+      alert("Configuration mise à jour !");
+      setConfig(res.data);
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la mise à jour");
+    }
+  };
+
+  if (loading) return <p>Chargement...</p>;
+  if (!config) return <p>Aucune configuration disponible.</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-400 to-gray-200">
-      {/* Navbar (identique à ModifyDesign) */}
-      <nav className="bg-gradient-to-r from-green-500 to-yellow-500 text-white p-4 shadow-md fixed w-full z-50">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="flex items-center text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded-lg transition-colors"
-            >
-              <FiArrowLeft className="mr-1" /> Retour
-            </button>
-            <img
-              src="/images/armoiries_logo_cenadi.png"
-              alt="Logo"
-              className="h-10"
+    <div className="max-w-5xl mx-auto p-6 space-y-6">
+      <h1 className="text-3xl font-bold mb-4">Dashboard Configuration</h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
+
+        {/* Général */}
+        <section className="border p-4 rounded shadow-sm">
+          <h2 className="font-bold text-xl mb-2">Général</h2>
+          <label className="block mb-1">Nom du site</label>
+          <input
+            type="text"
+            value={config.siteName}
+            onChange={e => setConfig(prev => ({ ...prev, siteName: e.target.value }))}
+            className="w-full border p-2 rounded mb-2"
+          />
+          <label className="block mb-1">Logo URL</label>
+          <input
+            type="text"
+            value={config.logoUrl}
+            onChange={e => setConfig(prev => ({ ...prev, logoUrl: e.target.value }))}
+            className="w-full border p-2 rounded"
+          />
+        </section>
+
+        {/* Thème global */}
+        <section className="border p-4 rounded shadow-sm">
+          <h2 className="font-bold text-xl mb-2">Thème</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block mb-1">Couleur principale</label>
+              <input
+                type="color"
+                value={config.theme.primaryColor}
+                onChange={e => handleNestedChange("theme", null, "primaryColor", e.target.value)}
+                className="w-full h-10"
+              />
+            </div>
+            <div>
+              <label className="block mb-1">Couleur secondaire</label>
+              <input
+                type="color"
+                value={config.theme.secondaryColor}
+                onChange={e => handleNestedChange("theme", null, "secondaryColor", e.target.value)}
+                className="w-full h-10"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mt-2">
+            <div>
+              <label className="block mb-1">Couleur de fond</label>
+              <input
+                type="color"
+                value={config.theme.backgroundColor}
+                onChange={e => handleNestedChange("theme", null, "backgroundColor", e.target.value)}
+                className="w-full h-10"
+              />
+            </div>
+            <div>
+              <label className="block mb-1">Couleur du texte</label>
+              <input
+                type="color"
+                value={config.theme.textColor}
+                onChange={e => handleNestedChange("theme", null, "textColor", e.target.value)}
+                className="w-full h-10"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Navbar */}
+        <section className="border p-4 rounded shadow-sm">
+          <h2 className="font-bold text-xl mb-2">Navbar</h2>
+          {["backgroundColor","textColor","hoverColor","activeColor"].map(key => (
+            <div className="mb-2" key={key}>
+              <label className="block mb-1">{key}</label>
+              <input
+                type="color"
+                value={config.theme.navbar[key]}
+                onChange={e => handleNestedChange("theme","navbar",key,e.target.value)}
+                className="w-full h-10"
+              />
+            </div>
+          ))}
+        </section>
+
+        {/* Footer */}
+        <section className="border p-4 rounded shadow-sm">
+          <h2 className="font-bold text-xl mb-2">Footer</h2>
+          {["backgroundColor","textColor","linkColor","hoverColor"].map(key => (
+            <div className="mb-2" key={key}>
+              <label className="block mb-1">{key}</label>
+              <input
+                type="color"
+                value={config.theme.footer[key]}
+                onChange={e => handleNestedChange("theme","footer",key,e.target.value)}
+                className="w-full h-10"
+              />
+            </div>
+          ))}
+        </section>
+
+        {/* Boutons */}
+        <section className="border p-4 rounded shadow-sm">
+          <h2 className="font-bold text-xl mb-2">Boutons</h2>
+          {["backgroundColor","textColor","hoverBackground","hoverText"].map(key => (
+            <div className="mb-2" key={key}>
+              <label className="block mb-1">{key}</label>
+              <input
+                type="color"
+                value={config.theme.button[key]}
+                onChange={e => handleNestedChange("theme","button",key,e.target.value)}
+                className="w-full h-10"
+              />
+            </div>
+          ))}
+          <div className="mb-2">
+            <label className="block mb-1">Border Radius</label>
+            <input
+              type="text"
+              value={config.theme.button.borderRadius}
+              onChange={e => handleNestedChange("theme","button","borderRadius",e.target.value)}
+              className="w-full border p-2 rounded"
             />
-            <span className="text-xl font-bold">GOV-AI</span>
           </div>
-        </div>
-      </nav>
+        </section>
 
-      {/* Contenu principal */}
-      <div className="container mx-auto pt-24 px-4">
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
-          <div className="p-8">
-            <h1 className="text-3xl font-bold text-green-700 mb-6 border-b-2 border-green-100 pb-4">
-              Que voulez-vous modifier au sein du footer ?
-            </h1>
-
-            {/* Champ 1 : Texte */}
-            <div className="space-y-6">
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <div className="flex justify-between items-center mb-2">
-                  <label className="block text-lg font-medium text-gray-700">Texte principal</label>
-                  <div className="flex space-x-2">
-                    <button className="text-blue-500 hover:text-blue-700">
-                      <FiEdit2 />
-                    </button>
-                    <button className="text-red-500 hover:text-red-700">
-                      <FiTrash2 />
-                    </button>
-                  </div>
-                </div>
-                <input
-                  type="text"
-                  value={text1}
-                  onChange={(e) => setText1(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg"
-                />
-              </div>
-
-              {/* Champ 2 : Image */}
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <div className="flex justify-between items-center mb-2">
-                  <label className="block text-lg font-medium text-gray-700">Image/Logo</label>
-                  <div className="flex space-x-2">
-                    <button className="text-blue-500 hover:text-blue-700">
-                      <FiEdit2 />
-                    </button>
-                    <button className="text-red-500 hover:text-red-700">
-                      <FiTrash2 />
-                    </button>
-                  </div>
-                </div>
-                <input
-                  type="text"
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="URL de l'image"
-                  className="w-full p-2 border border-gray-300 rounded-lg"
-                />
-              </div>
-
-              {/* Champ 3 : Copyright */}
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <div className="flex justify-between items-center mb-2">
-                  <label className="block text-lg font-medium text-gray-700">Texte de copyright</label>
-                  <div className="flex space-x-2">
-                    <button className="text-blue-500 hover:text-blue-700">
-                      <FiEdit2 />
-                    </button>
-                    <button className="text-red-500 hover:text-red-700">
-                      <FiTrash2 />
-                    </button>
-                  </div>
-                </div>
-                <input
-                  type="text"
-                  value={text2}
-                  onChange={(e) => setText2(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg"
-                />
-              </div>
+        {/* Sections */}
+        <section className="border p-4 rounded shadow-sm">
+          <h2 className="font-bold text-xl mb-2">Sections</h2>
+          {["headerBackground","headerTextColor","cardBackground","cardTextColor"].map(key => (
+            <div className="mb-2" key={key}>
+              <label className="block mb-1">{key}</label>
+              <input
+                type="color"
+                value={config.theme.section[key]}
+                onChange={e => handleNestedChange("theme","section",key,e.target.value)}
+                className="w-full h-10"
+              />
             </div>
+          ))}
+        </section>
 
-            {/* Pied de carte avec conseils */}
-            <div className="bg-green-50 p-6 mt-6 rounded-b-lg">
-              <p className="text-green-700 font-medium">
-                Conseil : Pour une meilleure accessibilité, utilisez des images avec un bon contraste et un texte alternatif.
-              </p>
-            </div>
+        {/* Contact */}
+        <section className="border p-4 rounded shadow-sm">
+          <h2 className="font-bold text-xl mb-2">Contact</h2>
+          <label className="block mb-1">Email</label>
+          <input
+            type="email"
+            value={config.contact.email}
+            onChange={e => handleNestedChange("contact",null,"email",e.target.value)}
+            className="w-full border p-2 rounded mb-2"
+          />
+          <label className="block mb-1">Téléphone</label>
+          <input
+            type="text"
+            value={config.contact.phone}
+            onChange={e => handleNestedChange("contact",null,"phone",e.target.value)}
+            className="w-full border p-2 rounded mb-2"
+          />
+          <label className="block mb-1">Adresse</label>
+          <input
+            type="text"
+            value={config.contact.address}
+            onChange={e => handleNestedChange("contact",null,"address",e.target.value)}
+            className="w-full border p-2 rounded mb-2"
+          />
+        </section>
 
-            <div className="flex justify-end mt-8">
-              <button
-                className="bg-gradient-to-r from-green-500 to-yellow-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:from-green-600 hover:to-yellow-600 transition-colors"
-                onClick={() => alert('Modifications enregistrées !')}
-              >
-                Enregistrer les modifications
-              </button>
+        {/* Contenu */}
+        <section className="border p-4 rounded shadow-sm">
+          <h2 className="font-bold text-xl mb-2">Contenu du site</h2>
+          {Object.keys(config.content).map(key => (
+            <div className="mb-2" key={key}>
+              <label className="block mb-1">{key}</label>
+              <input
+                type="text"
+                value={config.content[key]}
+                onChange={e => handleNestedChange("content",null,key,e.target.value)}
+                className="w-full border p-2 rounded"
+              />
             </div>
-          </div>
-        </div>
-      </div>
+          ))}
+        </section>
+
+        <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+          Sauvegarder
+        </button>
+      </form>
     </div>
   );
 };

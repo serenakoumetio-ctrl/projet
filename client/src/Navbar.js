@@ -18,7 +18,7 @@ function Navbar() {
             GOV-AI_Admin
           </div>
           <img
-            src="images/armoiries_logo_cenadi.png"
+            src="/img/2.png"
             alt="Logo"
             className="h-12 w-auto object-contain"
           />
@@ -29,7 +29,7 @@ function Navbar() {
             className="bg-green-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
             onClick={handleConnectClick}
           >
-            Se connecter
+            S'inscrire
           </button>
         </div>
         {/* Menu hamburger mobile */}

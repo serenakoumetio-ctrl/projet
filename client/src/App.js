@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import DashboardNavbar from './DashboardNavbar';
+import DashboardConfig from './pages/DashbordConfig';
 import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
 import AuthPage from './pages/AuthPage';
@@ -9,7 +10,7 @@ import ModifyDesign from './ModifyDesign';
 import  NavbarModify from'./NavbarModify';
 import HeaderModify from './HeaderModify';
 import BodyModify from "./BodyModify";
-import FooterModify from "./FooterModify";
+import FooterModify from './FooterModify';
 import ManageContents from './pages/ManageContents';
 import  Articles from'./pages/Articles';
 import Pages from './pages/Pages';
@@ -19,6 +20,7 @@ import ImagesManage from './pages/ImagesManage';
 import PagesSectionsManage from './pages/PagesSectionsManage';
 import DynamicBlocksManage from './pages/DynamicBlocksManage';
 import ContactMessagesManage from './pages/ContactMessagesManage';
+
 
 
 
@@ -48,6 +50,7 @@ function Layout() {
         <Route path="/contact-messages-manage" element={<ContactMessagesManage />} />
 
       </Routes>
+     
     </>
   );
 }

@@ -11,10 +11,10 @@ const Acc = () => { //Déclare un composant fonctionnel React.
         backgroundAttachment: "fixed", // ici l'image reste fixe pendant le scroll
         backgroundSize: "cover", // L’image couvre toute la zone, sans se déformer.
         backgroundPosition: "center", //Centre l’image.
-    
+
       }}
-    id='Acc'>
-      
+      id='Acc'>
+
       {/* Overlay sombre pour contraste Cet overlay sert à assombrir l’image de fond pour améliorer la lisibilité du texte.  absolute: Positionnement absolu par rapport au parent (section qui est en relative).*/}
       {/* inset-0 → Étend le div sur toute la largeur et hauteur du parent (top:0; right:0; bottom:0; left:0;). */}
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -25,7 +25,7 @@ const Acc = () => { //Déclare un composant fonctionnel React.
           Gov-AI : Revolutionner l'accès aux textes de loi du Cameroun
         </h2>
         <p className="text-lg md:text-xl mb-8" data-aos="zoom-in" data-aos-delay="200">
-  Une intelligence artificielle dédiée aux fonctionnaires pour une administration plus transparente, rapide et fiable.
+          Une intelligence artificielle dédiée aux fonctionnaires pour une administration plus transparente, rapide et fiable.
         </p>
 
         {/* Bouton qui redirige vers /home */}
