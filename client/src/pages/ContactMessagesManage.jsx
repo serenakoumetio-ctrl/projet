@@ -225,7 +225,7 @@ const ContactMessagesManage = () => {
               <FiArrowLeft className="mr-1" /> Retour
             </button>
             <img
-              src="/images/armoiries_logo_cenadi.png"
+              src="/img/2.png"
               alt="Logo"
               className="h-10"
             />

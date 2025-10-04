@@ -294,10 +294,6 @@
 
 
 
-
-
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -305,13 +301,12 @@ const Fonctionalite = () => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = "http://localhost:5000/api/cards"; // ton endpoint pour les cards
+  const API_URL = "http://localhost:5000/api/cards";
 
   useEffect(() => {
     const fetchCards = async () => {
       try {
         const res = await axios.get(API_URL);
-        console.log("Cartes reçues du backend :", res.data); // debug
         setCards(res.data);
       } catch (err) {
         console.error("Erreur récupération des cartes :", err);
@@ -319,42 +314,42 @@ const Fonctionalite = () => {
         setLoading(false);
       }
     };
-
     fetchCards();
   }, []);
 
   if (loading) return <p className="text-center py-10">Chargement...</p>;
   if (!cards.length) return <p className="text-center py-10">Aucune donnée disponible.</p>;
 
-  // Trier les cartes par type
   const features = cards.filter(c => c.type === "fonctionnalité");
   const advantages = cards.filter(c => c.type === "avantage");
 
   return (
-    <section className="py-16 bg-white" id="Fonctionalite">
+    <section className="py-16 bg-white font-sans" id="Fonctionalite">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-10" data-aos="fade-up">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800" data-aos="fade-up">
           Fonctionnalités de GOV-AI
         </h2>
 
+        {/* Cartes Fonctionnalités */}
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
             <div
               key={feature._id || index}
-              className="bg-white shadow-lg rounded-lg p-6 transition-transform transform hover:-translate-y-1 hover:shadow-2xl mb-10"
+              className="bg-white shadow-lg rounded-2xl p-6 md:p-8 transition-transform transform hover:-translate-y-1 hover:shadow-2xl mb-10"
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
-              <h3 className="text-2xl font-semibold mb-3">{feature.title}</h3>
-              <p className="text-lg">{feature.description}</p>
+              <h3 className="text-xl md:text-xl font-semibold mb-3 text-gray-800 leading-snug">{feature.title}</h3>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>
 
-        <div className="mx-auto flex justify-center mt-10">
+        {/* Bouton Découvrir Avantages */}
+        <div className="mx-auto flex justify-center mt-12">
           <a
             href="#Avantages"
-            className="bg-gradient-to-r from-green-500 to-yellow-400 shadow-lg text-white font-semibold py-3 px-6 rounded-full hover:bg-black hover:from-transparent transition duration-300"
+            className="bg-gradient-to-r from-green-500 to-yellow-400 shadow-lg text-white font-medium py-3 px-6 md:px-8 rounded-full hover:opacity-90 transition duration-300"
             data-aos="fade-up"
             data-aos-delay="400"
           >
@@ -362,43 +357,43 @@ const Fonctionalite = () => {
           </a>
         </div>
       </div>
-            
-      <section id="Avantages" className="container mx-auto px-4 py-40 grid md:grid-cols-3 gap-6  ">
-         {/* <h2 className="text-4xl text-center font-medium mt-20">Avantages de Gov-AI</h2> */}
+
+      {/* Cartes Avantages */}
+      <section id="Avantages" className="container mx-auto px-4 py-32 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {advantages.map((card, index) => (
           <div
             key={card._id || index}
-            className="card bg-gradient-to-r from-green-500 to-yellow-400 rounded-2xl shadow-lg p-6 transition duration-300 hover:bg-black hover:from-transparent hover:to-transparent"
+            className="bg-gradient-to-r from-green-500 to-yellow-400 rounded-2xl shadow-lg p-6 md:p-8 text-white
+                       transition-all duration-500 ease-in-out
+                       hover:scale-105 hover:shadow-xl hover:bg-black hover:from-black hover:to-black hover:text-white"
             data-aos="zoom-in"
             data-aos-delay={index * 100}
           >
-            <h3 className="text-2xl text-white font-bold mb-2">{card.title}</h3>
-            <p className="text-white text-lg">{card.description}</p>
+            <h3 className="text-lg md:text-xl font-bold mb-2 leading-snug">{card.title}</h3>
+            <p className="text-sm md:text-base leading-relaxed">{card.description}</p>
           </div>
         ))}
       </section>
+
+      {/* Section Centralisation */}
       <section id="centralisation" className="px-6 py-16 bg-green-50">
         <div className="max-w-5xl mx-auto">
-          <h2
-            className="text-3xl md:text-4xl font-bold  mb-6"
-            data-aos="fade-up"
-          >
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800" data-aos="fade-up">
             Centraliser et structurer le corpus gouvernemental
           </h2>
 
-          <p className="text-gray-500 mb-6" data-aos="fade-up" data-aos-delay="100">
+          <p className="text-gray-600 mb-6" data-aos="fade-up" data-aos-delay="100">
             Cela veut dire deux choses principales :
           </p>
 
           {/* 1) Centraliser */}
           <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-green-100"
-            data-aos="fade-up" data-aos-delay="150">
-            <h3 className="text-xl font-semibold mb-3">1. Centraliser</h3>
-            <p className=" mb-4">
-              Actuellement, les documents officiels (lois, décrets, arrêtés, circulaires, notes de service…)
-              peuvent être <span className="font-medium">dispersés</span> :
+               data-aos="fade-up" data-aos-delay="150">
+            <h3 className="text-xl font-semibold mb-3 text-dark">1. Centraliser</h3>
+            <p className="text-gray-600 mb-4">
+              Actuellement, les documents officiels peuvent être dispersés :
             </p>
-            <ul className="space-y-2 ">
+            <ul className="space-y-2 text-gray-600">
               <li className="flex items-start gap-2">
                 <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
                 Dans différents ministères
@@ -416,34 +411,27 @@ const Fonctionalite = () => {
                 Ou même dans des ordinateurs internes non connectés entre eux
               </li>
             </ul>
-
-            <p className=" mt-4">
+            <p className="text-gray-600 mt-2">
               <span className="font-semibold">Centraliser</span> consiste à rassembler toutes ces données
-              dans un seul point d’accès sécurisé.
-            </p>
-            <p className=" mt-2">
-              Avec <span className="font-semibold">Gov-AI</span>, cette “centralisation” veut dire que tous
-              les textes officiels se retrouvent dans une seule base de données, consultable par les
-              administrations autorisées.
+              dans un seul point d’accès sécurisé. <br></br> Avec <span className="font-semibold">Gov-AI</span>, cette
+              “centralisation” veut dire que tous les textes officiels se retrouvent dans une seule base de données,
+              consultable par les administrations autorisées.
             </p>
           </div>
 
-          {/* 2) Structurer (accroche courte pour la suite si tu veux l'ajouter) */}
+          {/* 2) Structurer */}
           <div className="bg-white rounded-2xl shadow-lg p-6 border border-green-100"
-            data-aos="fade-up" data-aos-delay="200">
-            <h3 className="text-xl font-semibold mb-3">2. Structurer</h3>
-            <p className="">
+               data-aos="fade-up" data-aos-delay="200">
+            <h3 className="text-xl font-semibold mb-3 text-dark">2. Structurer</h3>
+            <p className="text-gray-600 leading-relaxed">
               Organiser les textes par catégories, thèmes, dates, ministères et métadonnées pour
               permettre une recherche rapide et une consultation claire (bloc détaillé à ajouter si besoin).
             </p>
           </div>
         </div>
       </section>
-
     </section>
   );
 };
 
 export default Fonctionalite;
-
-
