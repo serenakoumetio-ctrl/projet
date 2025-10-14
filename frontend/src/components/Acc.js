@@ -1,34 +1,42 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Importer Link
+import React, { useState, useEffect } from 'react';
 
+const Acc = () => {
+  const fullText = "Gov-AI : Revolutionner l'accès aux textes de loi du Cameroun";
+  const [displayedText, setDisplayedText] = useState('');
+  const [index, setIndex] = useState(0);
 
-const Acc = () => { //Déclare un composant fonctionnel React.
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDisplayedText(fullText.slice(0, index + 1));
+      setIndex((prev) => (prev + 1) % (fullText.length + 1));
+    }, 100); // 100ms entre chaque lettre (ajuste la vitesse ici)
+
+    return () => clearTimeout(timeout);
+  }, [index, fullText]);
+
   return (
     <section
-      className="parallax text-center text-white py-40 relative" //Une classe personnalisée pour l'effet paralax,  relative: Position relative (utile pour placer des éléments en absolute à l'interieur)
+      className="parallax text-center text-white py-40 relative"
       style={{
-        backgroundImage: "url('/img/4.png')", // Change cette image selon tes besoins
-        backgroundAttachment: "fixed", // ici l'image reste fixe pendant le scroll
-        backgroundSize: "cover", // L’image couvre toute la zone, sans se déformer.
-        backgroundPosition: "center", //Centre l’image.
-
+        backgroundImage: "url('/img/DEL.png')",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
-      id='Acc'>
-
-      {/* Overlay sombre pour contraste Cet overlay sert à assombrir l’image de fond pour améliorer la lisibilité du texte.  absolute: Positionnement absolu par rapport au parent (section qui est en relative).*/}
-      {/* inset-0 → Étend le div sur toute la largeur et hauteur du parent (top:0; right:0; bottom:0; left:0;). */}
+      id='Acc'
+    >
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
-      {/* Contenu principal, z-10 Place le contenu au-dessus de l’overlay sombre. */}
-      <div className=" z-10 px-4 md:px-10 max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-6xl font-bold mb-6" data-aos="fade-up" >
-          Gov-AI : Revolutionner l'accès aux textes de loi du Cameroun
+      <div className="z-10 px-4 md:px-10 max-w-4xl mx-auto">
+        {/* Texte animé lettre par lettre */}
+        <h2 className="text-4xl md:text-6xl font-bold mb-6" data-aos="fade-up">
+          {displayedText}
+          <span className="blinking-cursor">|</span> {/* Curseur animé */}
         </h2>
         <p className="text-lg md:text-xl mb-8" data-aos="zoom-in" data-aos-delay="200">
           Une intelligence artificielle dédiée aux fonctionnaires pour une administration plus transparente, rapide et fiable.
         </p>
 
-        {/* Bouton qui redirige vers /home */}
         <a
           href="#Fonctionalite"
           className="bg-green-500 shadow-lg hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-full transition duration-300 inline-block"
@@ -37,8 +45,21 @@ const Acc = () => { //Déclare un composant fonctionnel React.
         >
           En savoir plus
         </a>
-
       </div>
+
+      {/* CSS pour le curseur qui clignote */}
+      <style>{`
+        .blinking-cursor {
+          font-weight: 100;
+          font-size: 2rem;
+          color: yellow;
+          animation: blink 1s step-start infinite;
+          margin-left: 2px;
+        }
+        @keyframes blink {
+          50% { opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 };

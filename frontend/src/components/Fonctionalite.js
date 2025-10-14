@@ -294,144 +294,69 @@
 
 
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import {
+  MagnifyingGlassCircleIcon,
+  BellAlertIcon,
+  DocumentCheckIcon,
+  ChatBubbleBottomCenterTextIcon,
+  DevicePhoneMobileIcon,
+} from "@heroicons/react/24/outline";
 
-const Fonctionalite = () => {
-  const [cards, setCards] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const API_URL = "http://localhost:5000/api/cards";
-
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const res = await axios.get(API_URL);
-        setCards(res.data);
-      } catch (err) {
-        console.error("Erreur récupération des cartes :", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCards();
-  }, []);
-
-  if (loading) return <p className="text-center py-10">Chargement...</p>;
-  if (!cards.length) return <p className="text-center py-10">Aucune donnée disponible.</p>;
-
-  const features = cards.filter(c => c.type === "fonctionnalité");
-  const advantages = cards.filter(c => c.type === "avantage");
+const Fonctionnalite = () => {
+  const features = [
+    {
+      title: "Recherche intelligente",
+      description: "Trouvez rapidement les textes juridiques pertinents grâce à une recherche en langage naturel.",
+      icon: <MagnifyingGlassCircleIcon className="w-10 h-10 text-green-600" />,
+    },
+    {
+      title: "Alertes personnalisées",
+      description: "Recevez des notifications lorsqu'un nouveau texte ou amendement vous concerne.",
+      icon: <BellAlertIcon className="w-10 h-10 text-yellow-500" />,
+    },
+    {
+      title: "Analyse automatisée",
+      description: "Comprenez rapidement le contenu juridique grâce à des résumés générés par l’IA.",
+      icon: <DocumentCheckIcon className="w-10 h-10 text-green-700" />,
+    },
+    {
+      title: "Assistance conversationnelle",
+      description: "Posez vos questions juridiques à l’assistant GOV-AI et obtenez des réponses précises.",
+      icon: <ChatBubbleBottomCenterTextIcon className="w-10 h-10 text-yellow-400" />,
+    },
+    {
+      title: "Multi-plateforme",
+      description: "Accédez à GOV-AI depuis le web, votre mobile ou votre poste de travail.",
+      icon: <DevicePhoneMobileIcon className="w-10 h-10 text-green-500" />,
+    },
+  ];
 
   return (
-    <section className="py-16 bg-white font-sans" id="Fonctionalite">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800" data-aos="fade-up">
-          Fonctionnalités de GOV-AI
-        </h2>
+    <section
+      id="Apropos"
+      className="py-20 bg-gradient-to-br from-green-200 via-yellow-100 to-green-300 overflow-hidden"
+    >
+      <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-16 text-green-700">
+         GOV-AI COMMENT CA MARCHE ? </h2>
 
-        {/* Cartes Fonctionnalités */}
-        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, index) => (
-            <div
-              key={feature._id || index}
-              className="bg-white shadow-lg rounded-2xl p-6 md:p-8 transition-transform transform hover:-translate-y-1 hover:shadow-2xl mb-10"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-            >
-              <h3 className="text-xl md:text-xl font-semibold mb-3 text-gray-800 leading-snug">{feature.title}</h3>
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Bouton Découvrir Avantages */}
-        <div className="mx-auto flex justify-center mt-12">
-          <a
-            href="#Avantages"
-            className="bg-gradient-to-r from-green-500 to-yellow-400 shadow-lg text-white font-medium py-3 px-6 md:px-8 rounded-full hover:opacity-90 transition duration-300"
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
-            Découvrez les Avantages de Gov-AI
-          </a>
-        </div>
-      </div>
-
-      {/* Cartes Avantages */}
-      <section id="Avantages" className="container mx-auto px-4 py-32 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {advantages.map((card, index) => (
+      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        {features.map((feature, index) => (
           <div
-            key={card._id || index}
-            className="bg-gradient-to-r from-green-500 to-yellow-400 rounded-2xl shadow-lg p-6 md:p-8 text-white
-                       transition-all duration-500 ease-in-out
-                       hover:scale-105 hover:shadow-xl hover:bg-black hover:from-black hover:to-black hover:text-white"
-            data-aos="zoom-in"
-            data-aos-delay={index * 100}
+            key={index}
+            className="bg-green-50 border border-green-200 rounded-3xl p-6 shadow-md hover:shadow-xl transition-transform hover:scale-105"
           >
-            <h3 className="text-lg md:text-xl font-bold mb-2 leading-snug">{card.title}</h3>
-            <p className="text-sm md:text-base leading-relaxed">{card.description}</p>
+            <div className="mb-4">{feature.icon}</div>
+            <h3 className="text-xl font-semibold text-green-700 mb-2">
+              {feature.title}
+            </h3>
+            <p className="text-gray-700">{feature.description}</p>
           </div>
         ))}
-      </section>
-
-      {/* Section Centralisation */}
-      <section id="centralisation" className="px-6 py-16 bg-green-50">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800" data-aos="fade-up">
-            Centraliser et structurer le corpus gouvernemental
-          </h2>
-
-          <p className="text-gray-600 mb-6" data-aos="fade-up" data-aos-delay="100">
-            Cela veut dire deux choses principales :
-          </p>
-
-          {/* 1) Centraliser */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-green-100"
-               data-aos="fade-up" data-aos-delay="150">
-            <h3 className="text-xl font-semibold mb-3 text-dark">1. Centraliser</h3>
-            <p className="text-gray-600 mb-4">
-              Actuellement, les documents officiels peuvent être dispersés :
-            </p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start gap-2">
-                <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
-                Dans différents ministères
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
-                Dans des archives papier
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
-                Sur des sites web séparés
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 inline-block h-2 w-2 rounded-full bg-green-600"></span>
-                Ou même dans des ordinateurs internes non connectés entre eux
-              </li>
-            </ul>
-            <p className="text-gray-600 mt-2">
-              <span className="font-semibold">Centraliser</span> consiste à rassembler toutes ces données
-              dans un seul point d’accès sécurisé. <br></br> Avec <span className="font-semibold">Gov-AI</span>, cette
-              “centralisation” veut dire que tous les textes officiels se retrouvent dans une seule base de données,
-              consultable par les administrations autorisées.
-            </p>
-          </div>
-
-          {/* 2) Structurer */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 border border-green-100"
-               data-aos="fade-up" data-aos-delay="200">
-            <h3 className="text-xl font-semibold mb-3 text-dark">2. Structurer</h3>
-            <p className="text-gray-600 leading-relaxed">
-              Organiser les textes par catégories, thèmes, dates, ministères et métadonnées pour
-              permettre une recherche rapide et une consultation claire (bloc détaillé à ajouter si besoin).
-            </p>
-          </div>
-        </div>
-      </section>
+      </div>
     </section>
   );
 };
 
-export default Fonctionalite;
+export default Fonctionnalite;
+

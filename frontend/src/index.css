@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Animation scroll (déjà ajoutée précédemment) */
+@keyframes scrollUpInfinite {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.scroll-wrapper {
+  display: flex;
+  flex-direction: column;
+  animation: scrollUpInfinite 20s linear infinite;
+}
+
+/* Animation image cercle */
+@keyframes pulseScale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Animation titre principal */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulseScale 4s ease-in-out infinite;
+}
+
+.animate-fade-slide-up {
+  animation: fadeSlideUp 1s ease-out forwards;
+}

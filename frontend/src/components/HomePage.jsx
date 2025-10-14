@@ -1,86 +1,56 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-const API_URL = "http://localhost:5000/api/sections";
+import React from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const HomePage = () => {
-  const [sections, setSections] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchSections = async () => {
-      try {
-        const res = await axios.get(API_URL);
-        setSections(res.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Erreur fetch sections :", err);
-        setLoading(false);
-      }
-    };
-    fetchSections();
-  }, []);
-
-  if (loading)
-    return <p className="text-center  text-gray-500">Chargement...</p>;
-
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <main className="container mx-auto px-4 space-y-12">
-        {sections.length > 0 ? (
-          sections
-            .sort((a, b) => a.position - b.position)
-            .map((section) => {
-              const bgColor =
-                section.options?.backgroundColor || "bg-white";
-              const textColor =
-                section.options?.textColor || "text-gray-900";
-
-              return (
-                <section
-                  key={section._id}
-                  className={`rounded-3xl shadow-lg p-10 transition-transform transform hover:-translate-y-2 hover:shadow-2xl`}
-                  style={{
-                    background: section.options?.backgroundGradient || "#ffffff",
-                    color: section.options?.textColor || "#111827",
-                    fontFamily: section.options?.fontFamily || "Inter, sans-serif",
-                  }}
-                >
-                  <h2 className="text-3xl font-bold mb-4 text-green-600">
-                    {section.titre}
-                  </h2>
-
-                  <p className="text-lg mb-6">{section.contenu}</p>
-
-                  {section.imageUrl && (
-                    <div className="overflow-hidden rounded-xl mb-6">
-                      <img
-                        src={section.imageUrl}
-                        alt={section.titre}
-                        className="w-full object-cover transition-transform duration-500 hover:scale-105 max-h-96"
-                      />
-                    </div>
-                  )}
-
-                  {section.options?.buttonText &&
-                    section.options?.buttonLink && (
-                      <a
-                        href={section.options.buttonLink}
-                        className="inline-block bg-gradient-to-r from-green-500 to-yellow-400 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1"
-                      >
-                        {section.options.buttonText}
-                      </a>
-                    )}
-                </section>
-              );
-            })
-        ) : (
-          <p className="text-center text-gray-400 text-lg">
-            Aucune section pour le moment
+     <section
+      id="HomePage"
+      className="py-20 bg-gradient-to-br from-green-200 via-yellow-100 to-green-300 overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-16">
+        
+        {/* Texte côté gauche */}
+        <div className="w-full lg:w-1/2 text-gray-800 space-y-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-green-700">
+            Bienvenue sur GOV-AI
+          </h1>
+          <p className="text-lg leading-relaxed">
+            GOV-AI est une plateforme d'intelligence artificielle conçue pour transformer l'accès au droit et aux textes juridiques au Cameroun. Grâce à une technologie avancée et une interface intuitive, elle rapproche le droit du citoyen tout en renforçant l'efficacité administrative.
           </p>
-        )}
-      </main>
-    </div>
+          <p className="text-lg leading-relaxed">
+            Vous êtes un juriste, un magistrat, un agent public ou un simple citoyen curieux de comprendre les lois en vigueur ? GOV-AI vous accompagne dans vos recherches, vous informe en temps réel et vous aide à naviguer dans un océan d’informations juridiques.
+          </p>
+          <p className="text-lg leading-relaxed">
+            Grâce à l'analyse intelligente, aux alertes personnalisées, et à l'interprétation des requêtes en langage naturel, GOV-AI va bien au-delà d’un simple moteur de recherche. Il devient votre assistant juridique du quotidien.
+          </p>
+        </div>
+
+        {/* Carrousel d'images à droite */}
+      <div className="w-[200px] md:w-[300px] rounded-3xl overflow-hidden shadow-lg border-2 border-green-300 mx-auto">
+          <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-green-300">
+            <Carousel
+              autoPlay
+              infiniteLoop
+              showThumbs={false}
+              showStatus={false}
+              interval={4000}
+              transitionTime={800}
+              stopOnHover
+            >
+              <div>
+                <img src="/img/interface.png" alt="Interface GOV-AI" />
+              </div>
+              <div>
+                <img src="/img/acceuilNgom.png" alt="Dashboard" />
+              </div>
+
+            </Carousel>
+          </div>
+        </div>
+
+      </div>
+    </section>
   );
 };
 

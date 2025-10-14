@@ -18,7 +18,7 @@ function Navbar() {
             GOV-AI_Admin
           </div>
           <img
-            src="/img/2.png"
+            src="\IMG-20250712-WA0005.jpg"
             alt="Logo"
             className="h-12 w-auto object-contain"
           />

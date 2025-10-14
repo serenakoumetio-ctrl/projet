@@ -1,192 +1,168 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
+import React, { useState } from "react";
 
-// const Apropos = () => {
-//   const [images, setImages] = useState([]);
-//   const API_URL = "http://localhost:5000"; // ton backend
-
-//   // Charger les images depuis le backend
-//   const fetchImages = async () => {
-//     try {
-//       const res = await axios.get(`${API_URL}/api/images`);
-//       setImages(res.data);
-//     } catch (err) {
-//       console.error("Erreur lors du chargement des images :", err);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchImages();
-//   }, []);
-
-//   return (
-//     <section id="Apropos">
-//       {/* Section texte */}
-//       <section className="text-center mt-10 px-4">
-//         <h4 className="text-xl md:text-2xl font-bold mb-6" data-aos="zoom-in">
-//           Une solution dédiée aux administrations publiques
-//         </h4>
-
-//         <p className="text-lg md:text-xl mb-14" data-aos="fade-up">
-//           Gov-AI est une initiative du CENANDI visant à intégrer l’intelligence artificielle
-//           au cœur des services publics. Elle aide les décideurs à anticiper les besoins,
-//           optimiser les ressources et améliorer la qualité des services rendus aux citoyens.
-//         </p>
-
-//         <p className="text-lg md:text-xl font-semibold mb-6" data-aos="zoom-in">
-//           Quelques images
-//         </p>
-//       </section>
-
-//       {/* Section cartes */}
-//       <section className="px-6 py-3">
-//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-//           {images.length > 0 ? (
-//             images.map((img, index) => (
-//               <div
-//                 key={img._id}
-//                 className="bg-green-100 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-transform transform hover:scale-105"
-//                 data-aos="fade-up"
-//                 data-aos-delay={index * 100}
-//               >
-//                 <img
-//                   src={`${API_URL}${img.url}`} // récupérer l’URL depuis la BDD
-//                   alt={img.title}
-//                   className="w-full h-60 object-cover"
-//                 />
-//               </div>
-//             ))
-//           ) : (
-//             <p className="text-center col-span-3 text-gray-500">Aucune image disponible</p>
-//           )}
-//         </div>
-//       </section>
-//     </section>
-//   );
-// };
-
-// export default Apropos;
-
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import {
+  CheckCircleIcon,
+  ShieldCheckIcon,
+  GlobeAltIcon,
+  BoltIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
 
 const Apropos = () => {
-  const [images, setImages] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(null); // index de l'image sélectionnée
-  const API_URL = "http://localhost:5000"; // ton backend
+  const [hoveredCard, setHoveredCard] = useState(null);
 
-  // Charger les images depuis le backend
-  const fetchImages = async () => {
-    try {
-      const res = await axios.get(`${API_URL}/api/images`);
-      setImages(res.data);
-    } catch (err) {
-      console.error("Erreur lors du chargement des images :", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchImages();
-  }, []);
-
-  // Fonctions navigation modale
-  const handlePrev = (e) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
-  };
-
-  const handleNext = (e) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
-  };
+  const cards = [
+    {
+      title: "Mission & Vision",
+      content:
+        "Gov‑AI modernise l’accès aux textes de loi grâce à l’IA pour une administration plus transparente.",
+    },
+    {
+      title: "Ce que nous offrons",
+      content:
+        "Moteur de recherche juridique, alertes personnalisées, analyse automatisée, interface intuitive.",
+    },
+    {
+      title: "Notre approche",
+      content:
+        "Une technologie éthique, locale et pensée pour les administrations camerounaises.",
+    },
+    {
+      title: "Accessibilité",
+      content:
+        "Une solution multilingue disponible sur tous les supports (web, mobile, desktop).",
+    },
+    {
+      title: "Sécurité",
+      content:
+        "Des données encryptées et hébergées localement pour garantir la souveraineté numérique.",
+    },
+    {
+      title: "Pourquoi GOV-AI ?",
+      content:
+        "Parce que l'accès aux textes juridiques doit être simple, rapide et intelligent. GOV-AI permet aux agents publics de trouver en quelques secondes les textes pertinents, évitant des heures de recherche manuelle.",
+    },
+    {
+      title: "Pour qui est GOV-AI ?",
+      content:
+        "GOV-AI s’adresse aux juristes, aux administrations, aux magistrats, mais aussi aux citoyens souhaitant mieux comprendre leurs droits et les lois en vigueur.",
+    },
+    {
+      title: "Un assistant juridique intelligent",
+      content:
+        "Basé sur l’intelligence artificielle, GOV-AI comprend vos requêtes en langage naturel, suggère des articles de loi pertinents, et apprend continuellement pour améliorer ses réponses.",
+    },
+  ];
 
   return (
-    <section id="Apropos">
-      {/* Section texte */}
-      <section className="text-center mt-10 px-4">
-        <h4 className="text-xl md:text-2xl font-bold mb-6" data-aos="zoom-in">
-          Une solution dédiée aux administrations publiques
-        </h4>
+    <section
+      id="Apropos"
+      className="py-20 bg-gradient-to-br from-green-200 via-yellow-100 to-green-300 overflow-hidden"
+    >
+      {/* Titre principal animé avec soulignement */}
+      <h2
+        className="relative text-3xl md:text-5xl font-extrabold mb-16 bg-gradient-to-r from-green-600 via-yellow-400 to-green-500 bg-clip-text text-transparent animate-fade-slide-up w-fit mx-auto
+          after:absolute after:-bottom-2 after:left-0 after:w-full after:h-1 after:rounded-full
+          after:bg-gradient-to-r after:from-green-600 after:via-yellow-400 after:to-green-500 after:animate-pulse"
+      >
+        C'est quoi GOV-IA ? / What's GOV-AI ?
+      </h2>
 
-        <p className="text-lg md:text-xl mb-14" data-aos="fade-up">
-          Gov-AI est une initiative du CENANDI visant à intégrer l’intelligence artificielle
-          au cœur des services publics. Elle aide les décideurs à anticiper les besoins,
-          optimiser les ressources et améliorer la qualité des services rendus aux citoyens.
+      {/* Texte de présentation globale */}
+      <div className="max-w-4xl mx-auto px-6 text-center mb-20"><li className="flex items-start gap-4">
+              <CheckCircleIcon className="w-7 h-7 flex-shrink-0 text-green-600 mt-1" />
+              <span></span>
+            </li>
+        <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
+          GOV-AI est une plateforme technologique de pointe conçue pour
+          révolutionner l’accès aux textes juridiques et administratifs au
+          Cameroun. Pensée pour les fonctionnaires, les juristes, les
+          magistrats mais aussi pour les citoyens, elle propose une nouvelle
+          manière de consulter, comprendre et utiliser les lois en vigueur.
+          Grâce à son intelligence artificielle, GOV-AI analyse les besoins en
+          temps réel, suggère des contenus pertinents, et facilite la prise de
+          décision administrative dans un cadre sécurisé, rapide et intuitif.
+          Son objectif : rapprocher le droit du citoyen et rendre
+          l’administration plus efficace.
         </p>
+      </div>
 
-        <p className="text-lg md:text-xl font-semibold mb-6" data-aos="zoom-in">
-          Quelques images
-        </p>
-      </section>
-
-      {/* Section cartes */}
-      <section className="px-6 py-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {images.length > 0 ? (
-            images.map((img, index) => (
-              <div
-                key={img._id}
-                className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 cursor-pointer"
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-                onClick={() => setCurrentIndex(index)}
-              >
-                <img
-                  src={`${API_URL}${img.url}`}
-                  alt={img.title}
-                  className="w-full h-80 object-cover"
-                />
-              </div>
-            ))
-          ) : (
-            <p className="text-center col-span-3 text-gray-500">
-              Aucune image disponible
-            </p>
-          )}
-        </div>
-      </section>
-
-      {/* Modale pour l'image */}
-      {currentIndex !== null && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50"
-          onClick={() => setCurrentIndex(null)}
-        >
-          <div className="relative flex items-center">
-            {/* Flèche gauche */}
-            <button
-              className="absolute left-0 text-white text-4xl p-4 hover:text-gray-300"
-              onClick={handlePrev}
-            >
-              ❮
-            </button>
-
-            {/* Image */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
+        {/* Cercle image avec animation */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center">
+          <div className="relative w-[150px] h-[400px] md:w-80 md:h-[500px] rounded-full overflow-hidden shadow-xl border-4 border-green-400 animate-pulse-slow">
             <img
-              src={`${API_URL}${images[currentIndex].url}`}
-              alt={images[currentIndex].title}
-              className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg"
-              onClick={(e) => e.stopPropagation()}
+              src="/img/interface.png"
+              alt="Gov-AI"
+              className="w-full h-full object-cover"
             />
-
-            {/* Flèche droite */}
-            <button
-              className="absolute right-0 text-white text-4xl p-4 hover:text-gray-300"
-              onClick={handleNext}
-            >
-              ❯
-            </button>
-
-            {/* Bouton fermer */}
-            <button
-              className="absolute top-2 right-2 bg-white text-black rounded-full px-3 py-1 shadow hover:bg-gray-200"
-              onClick={() => setCurrentIndex(null)}
-            >
-              ✕
-            </button>
+            <div className="absolute inset-0 bg-green-500 opacity-20 mix-blend-multiply"></div>
           </div>
         </div>
-      )}
+
+        {/* Cartes scroll automatique */}
+        <div className="w-full lg:w-1/2 h-[500px] overflow-hidden relative group">
+          <div className="scroll-wrapper animate-scroll group-hover:[animation-play-state:paused]">
+            {[...cards, ...cards].map((card, index) => (
+              <div
+                key={index}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                className="bg-green-50 p-6 rounded-xl shadow-md my-4 mx-2 transition-transform hover:scale-[1.02] cursor-pointer"
+              >
+                <h3 className="text-xl font-bold text-green-700 mb-2">
+                  {card.title}
+                </h3>
+                <p className="text-gray-700">{card.content}</p>
+
+                {/* Plein écran au survol */}
+                {hoveredCard === index && (
+                  <div className="fixed inset-0 bg-white z-50 flex items-center justify-center p-10">
+                    <div className="max-w-2xl bg-green-50 p-10 rounded-3xl shadow-xl">
+                      <h3 className="text-3xl font-bold text-green-700 mb-6">
+                        {card.title}
+                      </h3>
+                      <p className="text-lg text-gray-700">{card.content}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Carte conclusive */}
+      <div className="max-w-5xl mx-auto mt-20 px-6" data-aos="fade-up" data-aos-delay="300">
+        <div className="bg-gradient-to-br from-green-100 via-yellow-50 to-green-200 p-8 rounded-3xl shadow-xl transition-transform transform hover:scale-105">
+          <h3 className="text-2xl md:text-3xl font-bold text-green-700 mb-6 text-center">
+            Voici ce qu&apos;est GOV-AI 🌐
+          </h3>
+
+          <ul className="space-y-6 text-gray-800 text-lg leading-relaxed">
+            <li className="flex items-start gap-4">
+              <CheckCircleIcon className="w-7 h-7 flex-shrink-0 text-green-600 mt-1" />
+              <span>Assistant juridique intelligent qui révolutionne l’accès aux lois et réglementations.</span>
+            </li>
+            <li className="flex items-start gap-4">
+              <GlobeAltIcon className="w-7 h-7 flex-shrink-0 text-yellow-500 mt-1" />
+              <span>Accessibilité multilingue adaptée aux besoins des administrations camerounaises.</span>
+            </li>
+            <li className="flex items-start gap-4">
+              <ShieldCheckIcon className="w-7 h-7 flex-shrink-0 text-green-700 mt-1" />
+              <span>Garantit la sécurité et la souveraineté numérique avec un hébergement local des données.</span>
+            </li>
+            <li className="flex items-start gap-4">
+              <BoltIcon className="w-7 h-7 flex-shrink-0 text-yellow-400 mt-1" />
+              <span>Accélère la prise de décision administrative grâce à des suggestions précises et rapides.</span>
+            </li>
+            <li className="flex items-start gap-4">
+              <UserGroupIcon className="w-7 h-7 flex-shrink-0 text-green-600 mt-1" />
+              <span>Une solution pensée pour tous : agents publics, juristes, magistrats et citoyens.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
   );
 };
