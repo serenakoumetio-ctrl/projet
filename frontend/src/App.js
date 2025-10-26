@@ -6,7 +6,6 @@ import "aos/dist/aos.css"; //ci, on importe le fichier CSS de la bibliothèque A
 
 
 
-
 import Accueil from "./pages/Accueil";
 
 
@@ -20,7 +19,9 @@ function App() {
    
 
       <Accueil/>
-    
+      
+
+
   );
 }
 

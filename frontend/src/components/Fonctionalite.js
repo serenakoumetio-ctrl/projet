@@ -334,8 +334,8 @@ const Fonctionnalite = () => {
 
   return (
     <section
-      id="Apropos"
-      className="py-20 bg-gradient-to-br from-green-200 via-yellow-100 to-green-300 overflow-hidden"
+      id="Fonctionalite"
+      className="py-20 bg-gradient-to-br from-gray-100  overflow-hidden"
     >
       <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-16 text-green-700">
          GOV-AI COMMENT CA MARCHE ? </h2>

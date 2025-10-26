@@ -57,13 +57,13 @@ const Apropos = () => {
   return (
     <section
       id="Apropos"
-      className="py-20 bg-gradient-to-br from-green-200 via-yellow-100 to-green-300 overflow-hidden"
+      className="py-20 bg-gradient-to-br from-gray-100 overflow-hidden"
     >
       {/* Titre principal animé avec soulignement */}
       <h2
         className="relative text-3xl md:text-5xl font-extrabold mb-16 bg-gradient-to-r from-green-600 via-yellow-400 to-green-500 bg-clip-text text-transparent animate-fade-slide-up w-fit mx-auto
           after:absolute after:-bottom-2 after:left-0 after:w-full after:h-1 after:rounded-full
-          after:bg-gradient-to-r after:from-green-600 after:via-yellow-400 after:to-green-500 after:animate-pulse"
+          after:bg-gradient-to-r after:from-gray-100 after:via-yellow-400 after:to-green-500 after:animate-pulse"
       >
         C'est quoi GOV-IA ? / What's GOV-AI ?
       </h2>

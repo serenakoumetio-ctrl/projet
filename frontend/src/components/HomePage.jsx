@@ -6,7 +6,7 @@ const HomePage = () => {
   return (
      <section
       id="HomePage"
-      className="py-20 bg-gradient-to-br from-green-200 via-yellow-100 to-green-300 overflow-hidden"
+      className="py-20 bg-gradient-to-br from-gray-100  overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center gap-16">
         
