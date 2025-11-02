@@ -90,10 +90,8 @@
 // };
 
 // export default LoginPage;
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -105,6 +103,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    
     if (!matricule || !password) {
       setError("Veuillez remplir tous les champs.");
       return;
@@ -112,15 +111,27 @@ const LoginPage = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/users/login", {
-        matricule,
-        password,
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          matricule,
+          password,
+        }),
       });
-      const user = res.data.user;
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      navigate("/dashboard");
+
+      const result = await response.json();
+
+      if (result.success) {
+        localStorage.setItem("adminUser", JSON.stringify(result.user));
+        navigate("/dashboard");
+      } else {
+        setError(result.error || "Erreur de connexion");
+      }
     } catch (err) {
-      setError(err.response?.data?.error || "Erreur de connexion");
+      setError("Erreur de connexion au serveur");
     } finally {
       setLoading(false);
     }
@@ -128,13 +139,12 @@ const LoginPage = () => {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-400 via-green-600 to-yellow-300"
-      style={{ backgroundImage: "url('/img/ouiCENADI.webp')", backgroundSize: "cover" }}
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: "url('/img/ouiCENADI.webp')" }}
     >
-      {/* Formulaire avec fond semi-opaque pour lisibilité */}
       <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-10 w-full max-w-lg animate-fade-in">
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-8 drop-shadow-md">
-          Connexion
+          Connexion Admin
         </h2>
 
         {error && (
@@ -153,6 +163,7 @@ const LoginPage = () => {
               className="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400"
               placeholder="Votre matricule"
               required
+              disabled={loading}
             />
           </div>
 
@@ -165,17 +176,27 @@ const LoginPage = () => {
               className="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400"
               placeholder="Votre mot de passe"
               required
+              disabled={loading}
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-green-700 via-green-500 to-yellow-400 hover:brightness-110 transition duration-300 py-3 rounded-lg font-semibold text-white mt-4"
+            className="w-full bg-gradient-to-r from-green-700 via-green-500 to-yellow-400 hover:brightness-110 transition duration-300 py-3 rounded-lg font-semibold text-white mt-4 disabled:opacity-50"
           >
             {loading ? "Connexion..." : "Se connecter"}
           </button>
         </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-gray-600">
+            Pas de compte ?{" "}
+            <Link to="/register" className="text-green-600 hover:text-green-700 font-medium">
+              S'inscrire
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

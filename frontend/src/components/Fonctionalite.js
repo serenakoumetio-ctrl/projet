@@ -293,8 +293,9 @@
 
 
 
-
+//fonctionalites
 import React from "react";
+import useContent from '../hooks/useContent';
 import {
   MagnifyingGlassCircleIcon,
   BellAlertIcon,
@@ -304,59 +305,67 @@ import {
 } from "@heroicons/react/24/outline";
 
 const Fonctionnalite = () => {
-  const features = [
-    {
-      title: "Recherche intelligente",
-      description: "Trouvez rapidement les textes juridiques pertinents grâce à une recherche en langage naturel.",
-      icon: <MagnifyingGlassCircleIcon className="w-10 h-10 text-green-600" />,
-    },
-    {
-      title: "Alertes personnalisées",
-      description: "Recevez des notifications lorsqu'un nouveau texte ou amendement vous concerne.",
-      icon: <BellAlertIcon className="w-10 h-10 text-yellow-500" />,
-    },
-    {
-      title: "Analyse automatisée",
-      description: "Comprenez rapidement le contenu juridique grâce à des résumés générés par l’IA.",
-      icon: <DocumentCheckIcon className="w-10 h-10 text-green-700" />,
-    },
-    {
-      title: "Assistance conversationnelle",
-      description: "Posez vos questions juridiques à l’assistant GOV-AI et obtenez des réponses précises.",
-      icon: <ChatBubbleBottomCenterTextIcon className="w-10 h-10 text-yellow-400" />,
-    },
-    {
-      title: "Multi-plateforme",
-      description: "Accédez à GOV-AI depuis le web, votre mobile ou votre poste de travail.",
-      icon: <DevicePhoneMobileIcon className="w-10 h-10 text-green-500" />,
-    },
-  ];
+  // Contenu par défaut
+  const defaultFonctionnaliteContent = {
+    title: "GOV-AI COMMENT CA MARCHE ?",
+    features: []
+  };
+
+  const { content, loading } = useContent('fonctionnalite', defaultFonctionnaliteContent);
+
+  // Sécuriser les données
+  const safeFeatures = Array.isArray(content.features) ? content.features : [];
+
+  // Mapping des icônes
+  const iconComponents = {
+    MagnifyingGlassCircleIcon,
+    BellAlertIcon,
+    DocumentCheckIcon,
+    ChatBubbleBottomCenterTextIcon,
+    DevicePhoneMobileIcon
+  };
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-gradient-to-br from-gray-100 overflow-hidden">
+        <div className="flex justify-center items-center h-40">
+          <p>Chargement...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
       id="Fonctionalite"
-      className="py-20 bg-gradient-to-br from-gray-100  overflow-hidden"
+      className="py-20 bg-gradient-to-br from-gray-100 overflow-hidden"
     >
       <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-16 text-green-700">
-         GOV-AI COMMENT CA MARCHE ? </h2>
+        {content.title}
+      </h2>
 
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="bg-green-50 border border-green-200 rounded-3xl p-6 shadow-md hover:shadow-xl transition-transform hover:scale-105"
-          >
-            <div className="mb-4">{feature.icon}</div>
-            <h3 className="text-xl font-semibold text-green-700 mb-2">
-              {feature.title}
-            </h3>
-            <p className="text-gray-700">{feature.description}</p>
-          </div>
-        ))}
+        {safeFeatures.map((feature, index) => {
+          const IconComponent = iconComponents[feature.icon] || MagnifyingGlassCircleIcon;
+          
+          return (
+            <div
+              key={index}
+              className="bg-green-50 border border-green-200 rounded-3xl p-6 shadow-md hover:shadow-xl transition-transform hover:scale-105"
+            >
+              <div className="mb-4">
+                <IconComponent className="w-10 h-10 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-green-700 mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-700">{feature.description}</p>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
 };
 
 export default Fonctionnalite;
-
