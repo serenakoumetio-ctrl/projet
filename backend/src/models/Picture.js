@@ -1,22 +1,5 @@
 
 
-//  const mongoose = require('mongoose');
-
-// const pictureSchema = new mongoose.Schema({
-//   title: String,
-//   description: String,
-//   imageFilename: String
-// }, { timestamps: true });
-
-// module.exports = mongoose.model('Picture', pictureSchema);
-
-// const newImage = new Picture({
-//   title: req.body.title,
-//   description: req.body.description,
-//   url: req.file.filename, 
-//   uploader: req.body.uploader
-// });
-
 
 const mongoose = require("mongoose");
 

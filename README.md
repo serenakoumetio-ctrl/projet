@@ -46,6 +46,11 @@ Le site est une application **React.js + Tailwind CSS** et inclut des animations
 Il présente Gov-AI et ses fonctionnalités à travers plusieurs sections : accueil, à propos, fonctionnalités, contact.
 ---
 ## ⚙️ Installation
+npm install @heroicons/react
+npm install react-responsive-carousel
+npm install aos
+npm install react-router-dom
+
 Exécuter les commandes suivantes dans le dossier `frontend` :
 # Installer les dépendances principales
 npm install
@@ -55,6 +60,7 @@ npm install aos
 npm install axios
 npm install lucide-react
 lancer via npm start
+
 
 ---
 
