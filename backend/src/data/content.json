@@ -79,7 +79,7 @@
       {
         "title": "Multi-plateforme",
         "description": "Accédez à GOV-AI depuis le web, votre mobile ou votre poste de travail.",
-        "icon": "DevicePhoneMobileIcon"
+        "icon": "BellAlertIcon"
       }
     ]
   },
@@ -92,7 +92,8 @@
     ],
     "carouselImages": [
       "/uploads/interface.png",
-      "/uploads/acc.png"
+      "/uploads/acc.png",
+      "/uploads/1762068152425-WhatsApp-Image-2025-08-01----00.24.52-31a9c389.jpg"
     ]
   },
   "footer": {
