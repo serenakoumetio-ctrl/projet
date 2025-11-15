@@ -74,7 +74,6 @@
 //   );
 // }
 
-
 import React, { useState, useEffect } from "react";
 import useContent from '../hooks/useContent';
 import {
@@ -100,11 +99,8 @@ const Navbar = () => {
   };
 
   const { content, loading } = useContent('navbar', defaultNavbarContent);
-
-  // Sécuriser les données
   const safeMenuItems = Array.isArray(content.menuItems) ? content.menuItems : [];
 
-  // Mapping des icônes
   const iconComponents = {
     FaInfoCircle,
     FaCogs,
@@ -144,11 +140,8 @@ const Navbar = () => {
 
   const handleNavClick = (href) => {
     setMobileMenuOpen(false);
-    // Smooth scroll vers la section
     const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
   if (loading) {
@@ -165,13 +158,12 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-transparent dark:bg-gray-900/80 backdrop-blur-md transition-colors duration-300  border-gray-200 dark:border-gray-700">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-transparent dark:bg-gray-600/10 backdrop-blur-md transition-colors duration-300 border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           
-          {/* Logo + bouton thème - Côté gauche */}
+          {/* Logo + bouton thème */}
           <div className="flex items-center space-x-4">
-            {/* Bouton thème */}
             {content.themeToggle && (
               <button
                 onClick={toggleTheme}
@@ -181,31 +173,25 @@ const Navbar = () => {
                 {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
               </button>
             )}
-
-            {/* Logo */}
             <div className="text-yellow-400 font-extrabold text-2xl animate-pulse cursor-pointer select-none">
               {content.logoText}
             </div>
           </div>
 
-          {/* Menu Desktop - Côté droit */}
+          {/* Menu Desktop */}
           <div className="hidden md:flex items-center space-x-8">
-            <ul className="flex space-x-8 text-gray-700 dark:text-gray-200 font-medium">
+            <ul className="flex space-x-8 font-medium">
               {safeMenuItems.map((item, index) => {
                 const IconComponent = iconComponents[item.icon] || FaInfoCircle;
                 return (
                   <li key={index}>
                     <a
                       href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(item.href);
-                      }}
-                      className="flex items-center space-x-1 hover:text-green-600 transition group"
+                      onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
+                      className="flex items-center space-x-1 text-gray-800 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-500 transition group"
                     >
                       <IconComponent className="w-4 h-4" />
                       <span>{item.name}</span>
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 transition-all duration-300 "></div>
                     </a>
                   </li>
                 );
@@ -217,7 +203,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMobileMenu}
-              className="p-2 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+              className="p-2 rounded-md text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
               aria-label="Ouvrir le menu"
             >
               {mobileMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
@@ -235,23 +221,20 @@ const Navbar = () => {
                   <a
                     key={index}
                     href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    }}
-                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/20 transition text-gray-700 dark:text-gray-200 font-medium"
+                    onClick={(e) => { e.preventDefault(); handleNavClick(item.href); }}
+                    className="flex items-center space-x-3 p-3 rounded-lg transition text-gray-800 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-500 font-medium"
                   >
-                    <IconComponent className="w-5 h-5 text-green-500" />
+                    <IconComponent className="w-5 h-5" />
                     <span>{item.name}</span>
                   </a>
                 );
               })}
-              
-              {/* Thème toggle dans le menu mobile */}
+
+              {/* Thème toggle mobile */}
               {content.themeToggle && (
                 <button
                   onClick={toggleTheme}
-                  className="flex items-center space-x-3 p-3 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/20 transition text-gray-700 dark:text-gray-200 font-medium w-full"
+                  className="flex items-center space-x-3 p-3 rounded-lg transition text-gray-800 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-500 font-medium w-full"
                 >
                   {darkMode ? (
                     <>

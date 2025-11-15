@@ -16,5 +16,14 @@
     "password": "$2b$10$5mOlgCAwZK9XYKDgyPT.sOvc4vtvXK34VH66wGjYFxwOJmSdQqN96",
     "role": "admin",
     "dateCreation": "2025-11-02T10:20:14.208Z"
+  },
+  {
+    "id": "1763199571101",
+    "matricule": "AGSN",
+    "nom": "sam",
+    "prenom": "sam",
+    "password": "$2b$10$52HP00OvqVWEPd1IfnnwqOm.Pw.tUpFEhFKfgKU6wbK6gt62FvY76",
+    "role": "admin",
+    "dateCreation": "2025-11-15T09:39:31.101Z"
   }
 ]
