@@ -294,7 +294,7 @@
 
 
 //fonctionalites
-import React from "react";
+import React, { useState, useEffect } from "react";
 import useContent from '../hooks/useContent';
 import {
   MagnifyingGlassCircleIcon,
@@ -305,6 +305,19 @@ import {
 } from "@heroicons/react/24/outline";
 
 const Fonctionnalite = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Détecter le thème actuel et suivre les changements
+  useEffect(() => {
+    const checkTheme = () => setIsDarkMode(document.documentElement.classList.contains('dark'));
+    checkTheme();
+
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    return () => observer.disconnect();
+  }, []);
+
   // Contenu par défaut
   const defaultFonctionnaliteContent = {
     title: "GOV-AI COMMENT CA MARCHE ?",
@@ -313,10 +326,8 @@ const Fonctionnalite = () => {
 
   const { content, loading } = useContent('fonctionnalite', defaultFonctionnaliteContent);
 
-  // Sécuriser les données
   const safeFeatures = Array.isArray(content.features) ? content.features : [];
 
-  // Mapping des icônes
   const iconComponents = {
     MagnifyingGlassCircleIcon,
     BellAlertIcon,
@@ -327,7 +338,9 @@ const Fonctionnalite = () => {
 
   if (loading) {
     return (
-      <section className="py-20 bg-gradient-to-br from-gray-100 overflow-hidden">
+      <section className={`py-20 overflow-hidden transition-colors duration-500 ${
+        isDarkMode ? 'bg-black text-white' : 'bg-gradient-to-br from-gray-100 text-gray-800'
+      }`}>
         <div className="flex justify-center items-center h-40">
           <p>Chargement...</p>
         </div>
@@ -338,28 +351,34 @@ const Fonctionnalite = () => {
   return (
     <section
       id="Fonctionalite"
-      className="py-20 bg-gradient-to-br from-gray-100 overflow-hidden"
+      className={`py-20 overflow-hidden transition-colors duration-500 ${
+        isDarkMode ? 'bg-black text-white' : 'bg-gradient-to-br from-gray-100 text-gray-800'
+      }`}
     >
-      <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-16 text-green-700">
+      <h2 className={`text-3xl md:text-5xl font-extrabold text-center mb-16 ${
+        isDarkMode ? 'text-white' : 'text-green-700'
+      }`}>
         {content.title}
       </h2>
 
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {safeFeatures.map((feature, index) => {
           const IconComponent = iconComponents[feature.icon] || MagnifyingGlassCircleIcon;
-          
+
           return (
             <div
               key={index}
-              className="bg-green-50 border border-green-200 rounded-3xl p-6 shadow-md hover:shadow-xl transition-transform hover:scale-105"
+              className={`p-6 rounded-3xl shadow-md transition-transform hover:scale-105
+                ${isDarkMode ? 'bg-gray-900 text-white border-gray-700' : 'bg-green-50 border border-green-200 text-gray-700'}
+              `}
             >
               <div className="mb-4">
-                <IconComponent className="w-10 h-10 text-green-600" />
+                <IconComponent className={`${isDarkMode ? 'text-green-400' : 'text-green-600'} w-10 h-10`} />
               </div>
-              <h3 className="text-xl font-semibold text-green-700 mb-2">
+              <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-green-400' : 'text-green-700'}`}>
                 {feature.title}
               </h3>
-              <p className="text-gray-700">{feature.description}</p>
+              <p>{feature.description}</p>
             </div>
           );
         })}

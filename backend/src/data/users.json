@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1762065508390",
+    "matricule": "687045074",
+    "nom": "yyu",
+    "prenom": "bbh",
+    "password": "$2b$10$XLpAbmFHX306c2jE8Jwk1.dynKyxM5DKILSZ0mNOPioOBor.0e9oG",
+    "role": "admin",
+    "dateCreation": "2025-11-02T06:38:28.390Z"
+  },
+  {
+    "id": "1762078814208",
+    "matricule": "674420510",
+    "nom": "tanon",
+    "prenom": "serena",
+    "password": "$2b$10$5mOlgCAwZK9XYKDgyPT.sOvc4vtvXK34VH66wGjYFxwOJmSdQqN96",
+    "role": "admin",
+    "dateCreation": "2025-11-02T10:20:14.208Z"
+  },
+  {
+    "id": "1763199571101",
+    "matricule": "AGSN",
+    "nom": "sam",
+    "prenom": "sam",
+    "password": "$2b$10$52HP00OvqVWEPd1IfnnwqOm.Pw.tUpFEhFKfgKU6wbK6gt62FvY76",
+    "role": "admin",
+    "dateCreation": "2025-11-15T09:39:31.101Z"
+  }
+]
