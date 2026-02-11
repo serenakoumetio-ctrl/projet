@@ -205,11 +205,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'src/public/uploads')));
 app.use('/default', express.static(path.join(__dirname, 'src/public/default')));
 
+// Import de la connexion MongoDB
+const { connectDb } = require('./src/service/mongoose');
+
+// Connexion à MongoDB
+connectDb().then(() => {
+  console.log('✅ Connecté à MongoDB');
+}).catch(err => {
+  console.error('❌ Erreur de connexion MongoDB:', err);
+});
+
 // Routes (point to files in src/routes)
-app.use('/api/content', require('./src/routes/content'));
+app.use('/api/content', require('./src/routes/contentMongo')); // Utilise maintenant MongoDB
 app.use('/api/upload', require('./src/routes/upload'));
-app.use('/api/messages', require('./src/routes/messages'));
-app.use('/api/users', require('./src/routes/users'));
+app.use('/api/messages', require('./src/routes/messages')); // À migrer vers MongoDB plus tard
+app.use('/api/users', require('./src/routes/users')); // À migrer vers MongoDB plus tard
 
 // Route de test
 app.get('/api/test', (req, res) => {

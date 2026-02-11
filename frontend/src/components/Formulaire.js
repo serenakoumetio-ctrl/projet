@@ -20,7 +20,7 @@ const Formulaire = () => {
     setResponseMsg("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/messages", {
+      const response = await fetch("http://https://3ph6tdz7-5000.use.devtunnels.ms//api/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
